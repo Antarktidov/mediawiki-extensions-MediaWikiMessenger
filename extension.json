@@ -20,6 +20,84 @@
 			"class": "MediaWiki\\Extension\\MediaWikiMessenger\\Api\\GetChannels"
 		}
 	},
+    "AddGroups": {
+		"sysop": [
+			"chatadmin",
+			"chatmod",
+			"chat_guest"
+		],
+		"chatadmin": [
+			"chatmod",
+			"chat_guest"
+		],
+		"chatmod": [
+			"chatguest"
+		]
+	},
+	"RemoveGroups": {
+		"sysop": [
+			"chatadmin",
+			"chatmod",
+			"chatguest"
+		],
+		"chatadmin": [
+			"chatmod",
+			"chatguest"
+		],
+		"chatmod": [
+			"chatguest"
+		]
+	},
+	"GroupPermissions": {
+		"sysop": {
+			"view_deleted_messenger_channels": true,
+			"view_chatadmins_private_channels": true,
+            "view_chatmods_private_channels": true,
+            "write_to_chatadmins_restricted_channels": true,
+            "write_to_chatmods_restricted_channels": true,
+            "delete_channels": true,
+            "restore_channels": true,
+            "view_deleted_messages": true,
+            "delete_messages": true,
+            "restore_messages": true,
+            "protect_messages_to_chatadmins": true,
+            "protect_messages_to_chatamods": true,
+            "view_messages_history": true,
+            "write_to_chat": true,
+            "see_chat": true
+		},
+        "chatadmin": {
+			"view_deleted_messenger_channels": true,
+			"view_chatadmins_private_channels": true,
+            "view_chatmods_private_channels": true,
+            "write_to_chatadmins_restricted_channels": true,
+            "write_to_chatmods_restricted_channels": true,
+            "delete_channels": true,
+            "restore_channels": true,
+            "view_deleted_messages": true,
+            "delete_messages": true,
+            "restore_messages": true,
+            "protect_messages_to_chatadmins": true,
+            "protect_messages_to_chatamods": true,
+            "view_messages_history": true,
+            "write_to_chat": true,
+            "see_chat": true
+		},
+        "chatmod": {
+            "view_chatmods_private_channels": true,
+            "write_to_chatadmins_restricted_channels": true,
+            "delete_channels": true,
+            "delete_messages": true,
+            "protect_messages_to_chatamods": true,
+            "view_messages_history": true,
+            "write_to_chat": true,
+            "see_chat": true
+		},
+        "chatguest": {
+            "write_to_chat": true,
+            "see_chat": true
+        }
+	},
     "MessagesDirs": {
         "MediaWikiMessenger": [
             "i18n"
