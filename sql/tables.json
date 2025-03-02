@@ -3,7 +3,7 @@
         "name": "mw_messenger_channel",
         "columns": [
             {
-                "name": "mw-messenger_channel_id",
+                "name": "mw_messenger_channel_id",
                 "comment": "Unique ID to identify each row",
                 "type": "integer",
                 "options": { "unsigned": true, "notnull": true, "autoincrement": true }
