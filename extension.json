@@ -18,6 +18,9 @@
     "APIModules": {
 		"get_mw_messenger_channels": {
 			"class": "MediaWiki\\Extension\\MediaWikiMessenger\\Api\\GetChannels"
+		},
+        "get_mw_messenger_channel_messages": {
+			"class": "MediaWiki\\Extension\\MediaWikiMessenger\\Api\\GetChannelMessages"
 		}
 	},
     "AddGroups": {

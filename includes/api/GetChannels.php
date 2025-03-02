@@ -4,8 +4,6 @@ namespace MediaWiki\Extension\MediaWikiMessenger\Api;
 
 use ApiBase;
 use ApiMain;
-use Title;
-use WikiPage;
 use Wikimedia\Rdbms\DBConnRef;
 use Wikimedia\Rdbms\IDatabase;
 use MediaWiki\MediaWikiServices;
@@ -19,6 +17,12 @@ class GetChannels extends ApiBase {
 
     public function execute() {
 
+        $user = $this->getUser();
+
+        if (!$user->isAllowed('see_chat')) {
+            return;
+        }
+
         try {
             $dbProvider = MediaWikiServices::getInstance()->getConnectionProvider();
             $dbr = $dbProvider->getReplicaDatabase();
@@ -28,6 +32,7 @@ class GetChannels extends ApiBase {
             'is_writing_restricted_to_chatmods', 'is_writing_restricted_to_chatadmins',
             'is_deleted'] )
             ->from('mw_messenger_channel')
+            ->where('is_deleted = 0')
             ->fetchResultSet();
 
             $channel_names = [];
