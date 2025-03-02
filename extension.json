@@ -9,6 +9,12 @@
     "requires": {
         "MediaWiki": ">= 1.43.0"
     },
+    "AutoloadNamespaces": {
+        "MediaWiki\\Extension\\MediaWikiMessenger\\": "includes/"
+    },
+    "Hooks": {
+        "LoadExtensionSchemaUpdates": "MediaWiki\\Extension\\MediaWikiMessenger\\Hooks::onLoadExtensionSchemaUpdates"
+    },
     "MessagesDirs": {
         "MediaWikiMessenger": [
             "i18n"
