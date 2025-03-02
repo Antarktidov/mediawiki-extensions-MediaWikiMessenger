@@ -15,6 +15,11 @@
     "Hooks": {
         "LoadExtensionSchemaUpdates": "MediaWiki\\Extension\\MediaWikiMessenger\\Hooks::onLoadExtensionSchemaUpdates"
     },
+    "APIModules": {
+		"get_mw_messenger_channels": {
+			"class": "MediaWiki\\Extension\\MediaWikiMessenger\\Api\\GetChannels"
+		}
+	},
     "MessagesDirs": {
         "MediaWikiMessenger": [
             "i18n"
