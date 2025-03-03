@@ -118,5 +118,8 @@
             "i18n"
         ]
     },
+    "ExtensionMessagesFiles": {
+		"MediaWikiMessengerAlias": "MediaWikiMessenger.alias.php"
+	},
     "manifest_version": 2
 }
