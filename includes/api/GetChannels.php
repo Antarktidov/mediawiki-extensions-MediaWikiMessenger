@@ -35,14 +35,17 @@ class GetChannels extends ApiBase {
             ->where('is_deleted = 0')
             ->fetchResultSet();
 
-            $channel_names = [];
+            $channels = [];
 
             foreach ( $res as $row ) {
-                array_push($channel_names, $row->name);
+                $channels[] = [
+                    'name' => $row->name,
+                    'id' => (int)$row->mw_messenger_channel_id
+                ];
             }
 
             $this->getResult()->addValue( null, $this->getModuleName(), [
-                'channel_names' => $channel_names,
+                'channels' => $channels
             ] );
         } catch ( DBQueryError $e ) {
             $this->getResult()->addValue( null, $this->getModuleName(), [

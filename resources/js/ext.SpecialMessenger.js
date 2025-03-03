@@ -45,14 +45,17 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     console.error('Error when getting channels:', error);
                 });
             },
-            getChannelMessages() {
+            getChannelMessages(channelId) {
                 api.get({
                     action: 'get_mw_messenger_channel_messages',
                     format: 'json',
+                    channel_id: channelId
                 }).done((data) => {
-                    console.log(data);
+                    //console.log(data);
+                    this.messages = data['get_mw_messenger_channel_messages'].messages;
+                    console.log(this.messages);
                 }).fail((error) => {
-                    console.error('Error when getting channels:', error);
+                    console.error('Error when getting messages:', error);
                 });
             }
         }

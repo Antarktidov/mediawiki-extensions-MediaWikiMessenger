@@ -22,12 +22,12 @@ class Messenger extends \SpecialPage {
 						'<div id="mw-messenger">
 							<div id="mw-messenger-channels-list">
 								<ul>
-									<li><a v-for="channel_name in channels[\'channel_names\']" href="#">{{channel_name}}</a></li>
+									<li v-for="channel in channels"><a @click.prevent="getChannelMessages(channel[0].id)" href="#">{{channel[0].name}}</a></li>
 								</ul>
 							</div>
 							<div id="mw-messenger-channel-area">
 								<div id="mw-messenger-channel-messages">
-									<div id="mw-messenger-message">Тут должен быть текст сообщения</div>
+									<div v-for="message in messages" id="mw-messenger-message">{{message}}</div>
 								</div>
 							</div>
 						</div>'
