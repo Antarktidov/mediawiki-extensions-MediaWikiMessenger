@@ -21,13 +21,13 @@ class Messenger extends \SpecialPage {
         $out->addHTML(	
 						'<div id="mw-messenger">
 							<div id="mw-messenger-channels-list">
-								<ul>
-									<li v-for="channel in channels"><a @click.prevent="getChannelMessages(channel[0].id)" href="#">{{channel[0].name}}</a></li>
+								<ul v-for="channel in channels.channels">
+									<li><a @click.prevent="getChannelMessages(channel.id)" href="#">{{channel.name}}</a></li>
 								</ul>
 							</div>
 							<div id="mw-messenger-channel-area">
 								<div id="mw-messenger-channel-messages">
-									<div v-for="message in messages" id="mw-messenger-message">{{message}}</div>
+									<div v-for="message in reversedMessages" class="mw-messenger-message" v-html="message.parsedMessageText"></div>
 								</div>
 							</div>
 						</div>'

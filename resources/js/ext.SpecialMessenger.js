@@ -11,52 +11,61 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 parsedWikiText: "",
                 messages: [],
                 channels: [],
+                reversedMessages: [],
                 //currentChannelId: 0
             }
         },
         beforeMount() {
-            this.parseWikiText();
+            //this.parseWikiText();
             this.getChannels();
-            //console.log(this.channels);
         },
         methods: {
-            parseWikiText() {
-                api.post({
-                    action: 'parse',
-                    format: 'json',
-                    text: this.wikiText,
-                    contentmodel: 'wikitext'
-                }).done((data) => {
-                    this.parsedWikiText = data.parse.text['*'];
-                }).fail((error) => {
+            async parseWikiText(textBeforeParsing) {
+                try {
+                    const data = await api.post({
+                        action: 'parse',
+                        format: 'json',
+                        text: textBeforeParsing,
+                        contentmodel: 'wikitext'
+                    });
+                    return data.parse.text['*'];
+                } catch (error) {
                     console.error('Ошибка при преобразовании вики-разметки:', error);
-                });
+                    return '';
+                }
             },
             getChannels() {
                 api.get({
                     action: 'get_mw_messenger_channels',
                     format: 'json'
                 }).done((data) => {
-                    //this.parsedWikiText = data.parse.text['*'];
-                    //console.log(data);
                     this.channels = data['get_mw_messenger_channels'];
                     console.log(this.channels);
                 }).fail((error) => {
                     console.error('Error when getting channels:', error);
                 });
             },
-            getChannelMessages(channelId) {
-                api.get({
-                    action: 'get_mw_messenger_channel_messages',
-                    format: 'json',
-                    channel_id: channelId
-                }).done((data) => {
-                    //console.log(data);
+            async getChannelMessages(channelId) {
+                try {
+                    const data = await api.get({
+                        action: 'get_mw_messenger_channel_messages',
+                        format: 'json',
+                        channel_id: channelId
+                    });
                     this.messages = data['get_mw_messenger_channel_messages'].messages;
                     console.log(this.messages);
-                }).fail((error) => {
+
+                    for (let i = 0; i < this.messages.length; i++) {
+                        this.messages[i].parsedMessageText = await this.parseWikiText(this.messages[i].mw_messenger_message_revision_text);
+                    }
+
+                    this.reversedMessages = this.reverseArray(this.messages);
+                } catch (error) {
                     console.error('Error when getting messages:', error);
-                });
+                }
+            },
+            reverseArray(arr) {
+                return arr.reverse();
             }
         }
     });
