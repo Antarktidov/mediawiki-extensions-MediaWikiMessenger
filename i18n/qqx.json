@@ -3,5 +3,6 @@
         "authors": [ "Developer name" ]
     },
     "mw-messenger-desc": "About this app",
-    "mw-messenger-special-page": "Title of Special:Messenger"
+    "mw-messenger-special-page": "Title of Special:Messenger",
+    "mw-messenger-send-message-btn": "Send message button on Special:Messenger"
 }

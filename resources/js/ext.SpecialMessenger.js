@@ -14,12 +14,17 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 reversedMessages: [],
                 //currentChannelId: 0
                 scriptPath: '',
+                mwMessengerSendMessageBtnTxt: '',
+                myMessage: {
+                    text: ''
+                },
             }
         },
         beforeMount() {
             //this.parseWikiText();
             this.getChannels();
             this.scriptPath = mw.config.get('wgScriptPath');
+            this.mwMessengerSendMessageBtnTxt = mw.msg('mw-messenger-send-message-btn');
         },
         methods: {
             async parseWikiText(textBeforeParsing) {
@@ -68,6 +73,9 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             },
             reverseArray(arr) {
                 return arr.reverse();
+            },
+            sendMyMessage() {
+                console.log('msg send btn pressed');
             }
         }
     });

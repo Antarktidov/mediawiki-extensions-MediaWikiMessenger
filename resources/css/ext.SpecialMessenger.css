@@ -4,9 +4,14 @@
     
     & #mw-messenger-channels-list {
         width: 100px;
+    }
 
-        & .mw-messenger-message {
-            margin-bottom: 20px;
-        }
+    & .mw-messenger-message {
+        margin-bottom: 20px;
+    }
+
+    & #mw-messenger-textarea-send-message {
+        display: flex;
+        gap: 10px;
     }
 }

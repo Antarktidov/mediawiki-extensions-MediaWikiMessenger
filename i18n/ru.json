@@ -3,5 +3,6 @@
         "authors": [ "Antarktidov" ]
     },
     "mw-messenger-desc": "Мессенджер с поддержкой множества каналов и викиразметки.",
-    "mw-messenger-special-page": "Мессенджер"
+    "mw-messenger-special-page": "Мессенджер",
+    "mw-messenger-send-message-btn": "Отправить сообщение"
 }
