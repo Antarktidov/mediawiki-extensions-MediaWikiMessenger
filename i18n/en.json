@@ -1,0 +1,7 @@
+{
+    "@metadata": {
+        "authors": [ "Antarktidov" ]
+    },
+    "mw-messenger-desc": "Multi-channel messenger based on mediawiki. Supports wikitext.",
+    "mw-messenger-special-page": "Messenger"
+}

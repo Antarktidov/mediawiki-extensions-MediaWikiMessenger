@@ -5,12 +5,24 @@
     "descriptionmsg": "mw-messenger-desc",
     "version": "1.0.0",
     "license-name": "MIT",
-    "type": "other",
+    "type": "specialpage",
     "requires": {
         "MediaWiki": ">= 1.43.0"
     },
     "AutoloadNamespaces": {
         "MediaWiki\\Extension\\MediaWikiMessenger\\": "includes/"
+    },
+    "SpecialPages": {
+		"Messenger": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\Messenger"
+	},
+    "ResourceModules": {
+        "ext.SpoilerSpan": {
+            "scripts": [
+                "extensions/MediaWikiMessenger/resources/js/ext.SpecialMessenger.js"
+            ],
+            "targets": [ "desktop", "mobile" ],
+            "position": "top"
+        }
     },
     "Hooks": {
         "LoadExtensionSchemaUpdates": "MediaWiki\\Extension\\MediaWikiMessenger\\Hooks::onLoadExtensionSchemaUpdates"
