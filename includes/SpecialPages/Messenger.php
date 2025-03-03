@@ -27,7 +27,10 @@ class Messenger extends \SpecialPage {
 							</div>
 							<div id="mw-messenger-channel-area">
 								<div id="mw-messenger-channel-messages">
-									<div v-for="message in reversedMessages" class="mw-messenger-message" v-html="message.parsedMessageText"></div>
+								<div v-for="message in reversedMessages" class="mw-messenger-message">
+									<div class="mw-messenger-message-author"><a v-bind:href="scriptPath+\'/index.php/User:\'+message.user_name">{{message.user_name}}</a></div>
+									<div class="mw-messenger-message-body" v-html="message.parsedMessageText"></div>
+								</div>
 								</div>
 							</div>
 						</div>'

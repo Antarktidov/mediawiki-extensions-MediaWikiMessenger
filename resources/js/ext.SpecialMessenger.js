@@ -13,11 +13,13 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 channels: [],
                 reversedMessages: [],
                 //currentChannelId: 0
+                scriptPath: '',
             }
         },
         beforeMount() {
             //this.parseWikiText();
             this.getChannels();
+            this.scriptPath = mw.config.get('wgScriptPath');
         },
         methods: {
             async parseWikiText(textBeforeParsing) {
