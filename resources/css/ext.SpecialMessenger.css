@@ -1,0 +1,8 @@
+#mw-messenger {
+    display: flex;
+    gap: 30px;
+    
+    & #mw-messenger-channels-list {
+        width: 100px;
+    }
+}

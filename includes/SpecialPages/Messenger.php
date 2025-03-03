@@ -16,13 +16,22 @@ class Messenger extends \SpecialPage {
 
 	public function execute( $sub ) {
 		$out = $this->getOutput();
-		$out->addModules(['ext.SpoilerSpan']);
+		$out->addModules(['ext.MediaWikiMessenger']);
 		$out->setPageTitleMSg( $this->msg( 'mw-messenger-special-page' ) );
-        $out->addHTML("<h2>This is VueExampleSpecialPage</h2>");
-		$out->addHTML('<div v-cloak id="vue-example-special-page">
-        <p>message_from_vue_js: {{message_from_vue_js}}</p>
-        <div v-html="parsedWikiText"></div>
-    </div>');
+        $out->addHTML(	
+						'<div id="mw-messenger">
+							<div id="mw-messenger-channels-list">
+								<ul>
+									<li><a v-for="channel_name in channels[\'channel_names\']" href="#">{{channel_name}}</a></li>
+								</ul>
+							</div>
+							<div id="mw-messenger-channel-area">
+								<div id="mw-messenger-channel-messages">
+									<div id="mw-messenger-message">Тут должен быть текст сообщения</div>
+								</div>
+							</div>
+						</div>'
+					);
 	}
     	/** @inheritDoc */
 	protected function getGroupName() {

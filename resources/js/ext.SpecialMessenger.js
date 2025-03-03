@@ -1,5 +1,6 @@
 mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
     const Vue = require( 'vue' );
+    //Vue.config.devtools = true; // Включение режима разработки
     const api = new mw.Api();
 
     const app = Vue.createApp({
@@ -7,11 +8,16 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             return { 
                 message_from_vue_js: "this is vue.js, btw",
                 wikiText: "==Заголовок==\n'''Жирный текст'''",
-                parsedWikiText: ""
+                parsedWikiText: "",
+                messages: [],
+                channels: [],
+                //currentChannelId: 0
             }
         },
-        mounted() {
+        beforeMount() {
             this.parseWikiText();
+            this.getChannels();
+            //console.log(this.channels);
         },
         methods: {
             parseWikiText() {
@@ -25,11 +31,34 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 }).fail((error) => {
                     console.error('Ошибка при преобразовании вики-разметки:', error);
                 });
+            },
+            getChannels() {
+                api.get({
+                    action: 'get_mw_messenger_channels',
+                    format: 'json'
+                }).done((data) => {
+                    //this.parsedWikiText = data.parse.text['*'];
+                    //console.log(data);
+                    this.channels = data['get_mw_messenger_channels'];
+                    console.log(this.channels);
+                }).fail((error) => {
+                    console.error('Error when getting channels:', error);
+                });
+            },
+            getChannelMessages() {
+                api.get({
+                    action: 'get_mw_messenger_channel_messages',
+                    format: 'json',
+                }).done((data) => {
+                    console.log(data);
+                }).fail((error) => {
+                    console.error('Error when getting channels:', error);
+                });
             }
         }
     });
 
-    app.mount('#vue-example-special-page');
+    app.mount('#mw-messenger');
 
     console.log('messenger script is loaded');
 });

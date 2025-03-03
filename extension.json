@@ -16,9 +16,12 @@
 		"Messenger": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\Messenger"
 	},
     "ResourceModules": {
-        "ext.SpoilerSpan": {
+        "ext.MediaWikiMessenger": {
             "scripts": [
                 "extensions/MediaWikiMessenger/resources/js/ext.SpecialMessenger.js"
+            ],
+            "styles": [
+                "extensions/MediaWikiMessenger/resources/css/ext.SpecialMessenger.css"
             ],
             "targets": [ "desktop", "mobile" ],
             "position": "top"
