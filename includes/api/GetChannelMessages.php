@@ -67,6 +67,9 @@ class GetChannelMessages extends ApiBase {
             ->from('mw_messenger_message')
             ->where('is_deleted = 0')
             ->where("mw_messenger_message_channel_id = $channel_id")
+            ->orderBy('mw_messenger_message_id', 'DESC') // Сортировка в обратном порядке
+            ->limit($params['limit'] ?? 10) // Лимит на количество сообщений
+            ->offset(($params['page'] ?? 0) * ($params['limit'] ?? 10)) // Смещение для пагинации
             ->fetchResultSet();
 
             $messages = [];
@@ -121,7 +124,13 @@ class GetChannelMessages extends ApiBase {
             ],
             'page' => [
                 ApiBase::PARAM_REQUIRED => false,
-                ApiBase::PARAM_TYPE => 'integer'
+                ApiBase::PARAM_TYPE => 'integer',
+                ApiBase::PARAM_DFLT => 0 // Значение по умолчанию
+            ],
+            'limit' => [
+                ApiBase::PARAM_REQUIRED => false,
+                ApiBase::PARAM_TYPE => 'integer',
+                ApiBase::PARAM_DFLT => 10 // Значение по умолчанию
             ],
             'is_last' => [
                 ApiBase::PARAM_REQUIRED => false,
