@@ -32,11 +32,17 @@
     },
     "APIModules": {
 		"get_mw_messenger_channels": {
-			"class": "MediaWiki\\Extension\\MediaWikiMessenger\\Api\\GetChannels"
+			"class": "MediaWiki\\Extension\\MediaWikiMessenger\\Api\\GetChannels",
+            "method": "get"
 		},
         "get_mw_messenger_channel_messages": {
-			"class": "MediaWiki\\Extension\\MediaWikiMessenger\\Api\\GetChannelMessages"
-		}
+			"class": "MediaWiki\\Extension\\MediaWikiMessenger\\Api\\GetChannelMessages",
+            "method": "get"     
+		},
+        "send_message_mw_messenger": {
+            "class": "MediaWiki\\Extension\\MediaWikiMessenger\\Api\\PostMessageToChannel",
+            "method": "post"   
+        }
 	},
     "AddGroups": {
 		"sysop": [
