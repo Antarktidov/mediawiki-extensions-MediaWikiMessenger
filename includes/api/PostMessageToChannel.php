@@ -20,7 +20,7 @@ class PostMessageToChannel extends ApiBase {
             $user = $this->getUser();
 
             if (!$user->isAllowed('see_chat')) {
-                //return;
+                return;
             }
 
             $user_id = $user->getId();
