@@ -25,15 +25,54 @@ class PostMessageToChannel extends ApiBase {
 
             $user_id = $user->getId();
 
-            $message_text = PostMessageToChannel::test_input($_POST["message_text"]);
-            $channel_id = PostMessageToChannel::test_input($_POST["channel_id"]);
+            $message_text = $this->test_input($_POST["message_text"]);
+            $channel_id = $this->test_input($_POST["channel_id"]);
 
-            $this->getResult()->addValue( null, $this->getModuleName(), [
-                'message_text' => $message_text,
-                'channel_id' => $channel_id,
-                'user_id' => $user_id,
-            ] );
-          }
+            try {
+                $dbProvider = MediaWikiServices::getInstance()->getConnectionProvider();
+                $dbw = $dbProvider->getPrimaryDatabase();
+
+                // Вставка сообщения в таблицу mw_messenger_message
+                $dbw->insert(
+                    'mw_messenger_message',
+                    [
+                        'mw_messenger_message_user_id' => $user_id,
+                        'mw_messenger_message_channel_id' => $channel_id,
+                        'is_editing_restricted_to_chatmods' => 0,
+                        'is_editing_restricted_to_chatadmins' => 0,
+                        'is_deleted' => 0
+                    ],
+                    __METHOD__
+                );
+
+                // Получение ID вставленного сообщения
+                $message_id = $dbw->insertId();
+
+                // Вставка ревизии сообщения в таблицу mw_messenger_message_revision
+                $dbw->insert(
+                    'mw_messenger_message_revision',
+                    [
+                        'mw_messenger_message_revision_text' => $message_text,
+                        'mw_messenger_message_revision_user_id' => $user_id,
+                        'mw_messenger_message_revision_message_id' => $message_id,
+                        'is_deleted' => 0
+                    ],
+                    __METHOD__
+                );
+
+                $this->getResult()->addValue( null, $this->getModuleName(), [
+                    'message_text' => $message_text,
+                    'channel_id' => $channel_id,
+                    'user_id' => $user_id,
+                    'message_id' => $message_id
+                ] );
+            } catch ( DBQueryError $e ) {
+                $this->getResult()->addValue( null, $this->getModuleName(), [
+                    'result' => 'error',
+                    'error' => $e->getMessage()
+                ] );
+            }
+        }
     }
 
     private function test_input($data) {

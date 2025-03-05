@@ -12,7 +12,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 messages: [],
                 channels: [],
                 reversedMessages: [],
-                //currentChannelId: 0
+                currentChannelId: 0,
                 scriptPath: '',
                 mwMessengerSendMessageBtnTxt: '',
                 myMessage: {
@@ -67,6 +67,8 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     }
 
                     this.reversedMessages = this.reverseArray(this.messages);
+
+                    this.currentChannelId = channelId;
                 } catch (error) {
                     console.error('Error when getting messages:', error);
                 }
@@ -76,6 +78,24 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             },
             sendMyMessage() {
                 console.log('msg send btn pressed');
+
+                this.myMessage.text.trim();
+
+                if (this.myMessage.text === '' || this.currentChannelId === 0) {
+                    return;
+                }
+
+                api.post({
+                    action: 'send_message_mw_messenger',
+                    format: 'json',
+                    message_text: this.myMessage.text,
+                    channel_id: this.currentChannelId,
+                }).done((data) => {
+                    console.log(data);
+                    this.myMessage.text = '';
+                }).fail((error) => {
+                    console.error('Error when sending message:', error);
+                });
             }
         }
     });

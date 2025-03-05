@@ -19,7 +19,7 @@ class Messenger extends \SpecialPage {
 		$out->addModules(['ext.MediaWikiMessenger']);
 		$out->setPageTitleMSg( $this->msg( 'mw-messenger-special-page' ) );
         $out->addHTML(	
-						'<div id="mw-messenger">
+						'<div id="mw-messenger" v-cloak>
 							<div id="mw-messenger-channels-list">
 								<ul v-for="channel in channels.channels">
 									<li><a @click.prevent="getChannelMessages(channel.id)" href="#">{{channel.name}}</a></li>
