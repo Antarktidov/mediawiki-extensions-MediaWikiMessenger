@@ -18,6 +18,14 @@ class Messenger extends \SpecialPage {
 		$out = $this->getOutput();
 		$out->addModules(['ext.MediaWikiMessenger']);
 		$out->setPageTitleMSg( $this->msg( 'mw-messenger-special-page' ) );
+
+		$user = $this->getUser();
+
+		if (!$user->isAllowed( 'chat' ) ) {
+				$out->addWikiMsg( 'messenger-not-allowed' );
+				return;
+		}
+
         $out->addHTML(	
 						'<div id="mw-messenger" v-cloak>
 							<div id="mw-messenger-channels-list">

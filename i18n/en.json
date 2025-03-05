@@ -4,5 +4,6 @@
     },
     "mw-messenger-desc": "Multi-channel messenger based on mediawiki. Supports wikitext.",
     "mw-messenger-special-page": "Messenger",
-    "mw-messenger-send-message-btn": "Send message"
+    "mw-messenger-send-message-btn": "Send message",
+    "messenger-not-allowed": "You not allowed to see and use messenger."
 }

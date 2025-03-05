@@ -4,5 +4,6 @@
     },
     "mw-messenger-desc": "Мессенджер с поддержкой множества каналов и викиразметки.",
     "mw-messenger-special-page": "Мессенджер",
-    "mw-messenger-send-message-btn": "Отправить сообщение"
+    "mw-messenger-send-message-btn": "Отправить сообщение",
+    "messenger-not-allowed": "К сожалению, вам не разрешено просматриравать мессенджер и общаться в нём."
 }
