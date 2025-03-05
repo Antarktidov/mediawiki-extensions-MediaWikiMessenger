@@ -19,6 +19,8 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     text: ''
                 },
                 isUserCanDeleteOtherUsersMessages: false,
+                isChannelSet: false,
+                userId: 0,
             }
         },
         beforeMount() {
@@ -26,8 +28,11 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             this.getChannels();
             this.scriptPath = mw.config.get('wgScriptPath');
             this.mwMessengerSendMessageBtnTxt = mw.msg('mw-messenger-send-message-btn');
-            this.setIsUserCanDeleteOtherUsersMessages();
-            console.log('this.isUserCanDeleteOtherUsersMessages', this.isUserCanDeleteOtherUsersMessages);
+            this.isUserCanDeleteOtherUsersMessages = mw.config.get('isUserCanDeleteOtherUsersMessages');
+            this.userId = mw.config.get('userId');
+
+            console.log('this.userId', this.userId);
+            
         },
         methods: {
             async parseWikiText(textBeforeParsing) {
@@ -72,6 +77,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     this.reversedMessages = this.reverseArray(this.messages);
 
                     this.currentChannelId = channelId;
+                    this.isChannelSet = true;
                 } catch (error) {
                     console.error('Error when getting messages:', error);
                 }
@@ -100,9 +106,6 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     console.error('Error when sending message:', error);
                 });
             },
-            setIsUserCanDeleteOtherUsersMessages() {
-                this.isUserCanDeleteOtherUsersMessages = mw.config.get('isUserCanDeleteOtherUsersMessages');
-            }
         }
     });
 

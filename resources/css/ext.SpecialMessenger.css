@@ -17,9 +17,9 @@
                 margin-right: auto;
                 width: fit-content;
             }
-            & .mw-message-right {
+            & .mw-messenger-message-header-right {
                 display: flex;
-                margin-left: auto;
+                gap: 10px;
                 width: fit-content;
             }
         }
