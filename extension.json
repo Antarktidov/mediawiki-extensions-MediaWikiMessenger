@@ -25,7 +25,11 @@
             ],
             "targets": [ "desktop", "mobile" ],
             "position": "top",
-            "messages": ["mw-messenger-send-message-btn"]
+            "messages": [
+                "mw-messenger-send-message-btn",
+                "mw-messenger-edit-message-btn",
+                "mw-messenger-delete-message-btn"
+            ]
         }
     },
     "Hooks": {

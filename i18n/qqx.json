@@ -5,5 +5,7 @@
     "mw-messenger-desc": "About this app",
     "mw-messenger-special-page": "Title of Special:Messenger",
     "mw-messenger-send-message-btn": "Send message button on Special:Messenger",
+    "mw-messenger-delete-message-btn": "Delete message button on Special:Messenger",
+    "mw-messenger-edit-message-btn": "Edit message button on Special:Messenger",
     "messenger-not-allowed": "Message seeing by users who not allowed to use messenger"
 }

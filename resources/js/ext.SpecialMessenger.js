@@ -6,15 +6,17 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
     const app = Vue.createApp({
         data() {
             return { 
-                message_from_vue_js: "this is vue.js, btw",
+                /*message_from_vue_js: "this is vue.js, btw",
                 wikiText: "==Заголовок==\n'''Жирный текст'''",
-                parsedWikiText: "",
+                parsedWikiText: "",*/
                 messages: [],
                 channels: [],
                 reversedMessages: [],
                 currentChannelId: 0,
                 scriptPath: '',
                 mwMessengerSendMessageBtnTxt: '',
+                mwMessengerEditMessageBtnTxt: '',
+                mwMessengerDeleteMessageBtnTxt: '',
                 myMessage: {
                     text: ''
                 },
@@ -28,6 +30,8 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             this.getChannels();
             this.scriptPath = mw.config.get('wgScriptPath');
             this.mwMessengerSendMessageBtnTxt = mw.msg('mw-messenger-send-message-btn');
+            this.mwMessengerEditMessageBtnTxt = mw.msg('mw-messenger-edit-message-btn');
+            this.mwMessengerDeleteMessageBtnTxt = mw.msg('mw-messenger-delete-message-btn');
             this.isUserCanDeleteOtherUsersMessages = mw.config.get('isUserCanDeleteOtherUsersMessages');
             this.userId = mw.config.get('userId');
 

@@ -50,8 +50,8 @@ class Messenger extends \SpecialPage {
 												<a v-bind:href="scriptPath+\'/index.php/User:\'+message.user_name">{{message.user_name}}</a>
 											</span>
 											<span class="mw-messenger-message-header-right">
-												<span v-if="userId === +message.mw_messenger_message_user_id">Править</span>
-												<span v-if="userId === +message.mw_messenger_message_user_id || isUserCanDeleteOtherUsersMessages">Удалить</span>
+												<a href="#" v-if="userId === +message.mw_messenger_message_user_id">{{mwMessengerEditMessageBtnTxt}}</a>
+												<a href="#" v-if="userId === +message.mw_messenger_message_user_id || isUserCanDeleteOtherUsersMessages">{{mwMessengerDeleteMessageBtnTxt}}</a>
 											</span>
 										</div>
 										<div class="mw-messenger-message-body" v-html="message.parsedMessageText"></div>
