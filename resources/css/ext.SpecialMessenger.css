@@ -8,6 +8,21 @@
 
     & .mw-messenger-message {
         margin-bottom: 20px;
+
+        & .mw-messenger-message-header {
+            display: flex;
+            gap: 500px;
+            & .mw-messenger-message-author {
+                display: flex;
+                margin-right: auto;
+                width: fit-content;
+            }
+            & .mw-message-right {
+                display: flex;
+                margin-left: auto;
+                width: fit-content;
+            }
+        }
     }
 
     & #mw-messenger-textarea-send-message {

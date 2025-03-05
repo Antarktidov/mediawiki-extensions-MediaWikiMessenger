@@ -18,6 +18,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 myMessage: {
                     text: ''
                 },
+                isUserCanDeleteOtherUsersMessages: false,
             }
         },
         beforeMount() {
@@ -25,6 +26,8 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             this.getChannels();
             this.scriptPath = mw.config.get('wgScriptPath');
             this.mwMessengerSendMessageBtnTxt = mw.msg('mw-messenger-send-message-btn');
+            this.setIsUserCanDeleteOtherUsersMessages();
+            console.log('this.isUserCanDeleteOtherUsersMessages', this.isUserCanDeleteOtherUsersMessages);
         },
         methods: {
             async parseWikiText(textBeforeParsing) {
@@ -96,6 +99,9 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 }).fail((error) => {
                     console.error('Error when sending message:', error);
                 });
+            },
+            setIsUserCanDeleteOtherUsersMessages() {
+                this.isUserCanDeleteOtherUsersMessages = mw.config.get('isUserCanDeleteOtherUsersMessages');
             }
         }
     });

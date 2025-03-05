@@ -26,6 +26,12 @@ class Messenger extends \SpecialPage {
 				return;
 		}
 
+		$isUserCanDeleteOtherUsersMessages = $user->isAllowed( 'delete_messages' );
+
+		$out->addJsConfigVars([
+			'isUserCanDeleteOtherUsersMessages' => $isUserCanDeleteOtherUsersMessages,
+		]);
+
         $out->addHTML(	
 						'<div id="mw-messenger" v-cloak>
 							<div id="mw-messenger-channels-list">
@@ -33,10 +39,10 @@ class Messenger extends \SpecialPage {
 									<li><a @click.prevent="getChannelMessages(channel.id)" href="#">{{channel.name}}</a></li>
 								</ul>
 							</div>
-							<div id="mw-messenger-channel-area">
+							<div v-if="reversedMessages.length" id="mw-messenger-channel-area">
 								<div id="mw-messenger-channel-messages">
 									<div v-for="message in reversedMessages" class="mw-messenger-message">
-										<div class="mw-messenger-message-author"><a v-bind:href="scriptPath+\'/index.php/User:\'+message.user_name">{{message.user_name}}</a></div>
+										<div class="mw-messenger-message-header"><span class="mw-messenger-message-author"><a v-bind:href="scriptPath+\'/index.php/User:\'+message.user_name">{{message.user_name}}</a></span><span class="mw-message-right">Правая часть шапки сообщения</span></div>
 										<div class="mw-messenger-message-body" v-html="message.parsedMessageText"></div>
 									</div>
 								</div>

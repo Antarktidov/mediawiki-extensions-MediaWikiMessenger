@@ -24,7 +24,8 @@
                 "extensions/MediaWikiMessenger/resources/css/ext.SpecialMessenger.css"
             ],
             "targets": [ "desktop", "mobile" ],
-            "position": "top"
+            "position": "top",
+            "messages": ["mw-messenger-send-message-btn"]
         }
     },
     "Hooks": {
