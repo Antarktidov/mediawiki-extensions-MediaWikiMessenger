@@ -1,14 +1,11 @@
 mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
     const Vue = require( 'vue' );
-    //Vue.config.devtools = true; // Включение режима разработки
+//Vue.config.devtools = true; // Включение режима разработки
     const api = new mw.Api();
 
     const app = Vue.createApp({
         data() {
             return { 
-                /*message_from_vue_js: "this is vue.js, btw",
-                wikiText: "==Заголовок==\n'''Жирный текст'''",
-                parsedWikiText: "",*/
                 messages: [],
                 channels: [],
                 reversedMessages: [],
@@ -20,13 +17,16 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 myMessage: {
                     text: ''
                 },
+                editedMessage: {
+                    text: ''
+                },
                 isUserCanDeleteOtherUsersMessages: false,
                 isChannelSet: false,
                 userId: 0,
+                globalIsMessageEditorOpen: false,
             }
         },
         beforeMount() {
-            //this.parseWikiText();
             this.getChannels();
             this.scriptPath = mw.config.get('wgScriptPath');
             this.mwMessengerSendMessageBtnTxt = mw.msg('mw-messenger-send-message-btn');
@@ -73,6 +73,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
 
                     for (let i = 0; i < this.messages.length; i++) {
                         this.messages[i].parsedMessageText = await this.parseWikiText(this.messages[i].mw_messenger_message_revision_text);
+                        this.messages[i].isMessageEditorOpen = false; // Ensure this property exists
                     }
 
                     this.reversedMessages = this.reverseArray(this.messages);
@@ -89,7 +90,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             sendMyMessage() {
                 console.log('msg send btn pressed');
 
-                this.myMessage.text.trim();
+                this.myMessage.text = this.myMessage.text.trim();
 
                 if (this.myMessage.text === '' || this.currentChannelId === 0) {
                     return;
@@ -103,6 +104,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 }).done((data) => {
                     console.log(data);
                     this.myMessage.text = '';
+                    this.getChannelMessages(this.currentChannelId);
                 }).fail((error) => {
                     console.error('Error when sending message:', error);
                 });
@@ -119,6 +121,37 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 }).fail((error) => {
                     console.error('Error when deleting message:', error);
                 });
+            },
+            openMessageEditor(messageId) {
+                console.log('Кнопка править нажата');
+
+                if (this.globalIsMessageEditorOpen) {
+                    return;
+                }
+
+                console.log('Проверка пройдена');
+        
+                this.globalIsMessageEditorOpen = true;
+
+                this.reversedMessages.forEach(element => {
+                    if (element.mw_messenger_message_id === messageId) {
+                        element.isMessageEditorOpen = true;
+                        this.editedMessage.text = element.mw_messenger_message_revision_text;
+                    }
+                });
+            },
+            closeMessageEditor(messageId) {
+                this.globalIsMessageEditorOpen = false;
+                this.reversedMessages.forEach(element => {
+                    if (element.mw_messenger_message_id === messageId) {
+                        element.isMessageEditorOpen = false;
+                        this.editedMessage.text = '';
+                    }
+                });
+            },
+            updateMyMessage(messageId) {
+                console.log('Кнопка, отвечающая за обновление сообщения, нажата');
+                // Добавьте здесь код для обновления сообщения
             }
         }
     });

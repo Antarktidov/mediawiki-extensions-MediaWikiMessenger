@@ -29,6 +29,16 @@
         display: flex;
         gap: 10px;
     }
+
+    textarea {
+        height: 100px;
+    }
+
+    & .mw-messenger-message-editor-footer-btns {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px
+    }
 }
 
 [v-cloak] {
