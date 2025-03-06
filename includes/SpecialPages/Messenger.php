@@ -51,7 +51,7 @@ class Messenger extends \SpecialPage {
 											</span>
 											<span class="mw-messenger-message-header-right">
 												<a href="#" v-if="userId === +message.mw_messenger_message_user_id">{{mwMessengerEditMessageBtnTxt}}</a>
-												<a href="#" v-if="userId === +message.mw_messenger_message_user_id || isUserCanDeleteOtherUsersMessages">{{mwMessengerDeleteMessageBtnTxt}}</a>
+												<a @click.prevent="deletedMessage(message.mw_messenger_message_id)" href="#" v-if="userId === +message.mw_messenger_message_user_id || isUserCanDeleteOtherUsersMessages">{{mwMessengerDeleteMessageBtnTxt}}</a>
 											</span>
 										</div>
 										<div class="mw-messenger-message-body" v-html="message.parsedMessageText"></div>

@@ -33,10 +33,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             this.mwMessengerEditMessageBtnTxt = mw.msg('mw-messenger-edit-message-btn');
             this.mwMessengerDeleteMessageBtnTxt = mw.msg('mw-messenger-delete-message-btn');
             this.isUserCanDeleteOtherUsersMessages = mw.config.get('isUserCanDeleteOtherUsersMessages');
-            this.userId = mw.config.get('userId');
-
-            console.log('this.userId', this.userId);
-            
+            this.userId = mw.config.get('userId');           
         },
         methods: {
             async parseWikiText(textBeforeParsing) {
@@ -110,6 +107,19 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     console.error('Error when sending message:', error);
                 });
             },
+
+            deletedMessage(messageId) {
+                api.post({
+                    action: 'delete_message_mw_messenger',
+                    format: 'json',
+                    message_id: messageId,
+                }).done((data) => {
+                    console.log(data);
+                    this.getChannelMessages(this.currentChannelId);
+                }).fail((error) => {
+                    console.error('Error when deleting message:', error);
+                });
+            }
         }
     });
 

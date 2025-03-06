@@ -48,6 +48,11 @@
             "class": "MediaWiki\\Extension\\MediaWikiMessenger\\Api\\PostMessageToChannel",
             "method": "post"   
         }
+        ,
+        "delete_message_mw_messenger": {
+            "class": "MediaWiki\\Extension\\MediaWikiMessenger\\Api\\DeleteMessageFromChannel",
+            "method": "post"   
+        }
 	},
     "AddGroups": {
 		"sysop": [
