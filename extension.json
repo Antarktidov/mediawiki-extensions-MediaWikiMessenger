@@ -13,7 +13,8 @@
         "MediaWiki\\Extension\\MediaWikiMessenger\\": "includes/"
     },
     "SpecialPages": {
-		"Messenger": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\Messenger"
+		"Messenger": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\Messenger",
+		"CreateMessengerChannel": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\CreateMessengerChannel"
 	},
     "ResourceModules": {
         "ext.MediaWikiMessenger": {
@@ -96,6 +97,7 @@
             "view_chatmods_private_channels": true,
             "write_to_chatadmins_restricted_channels": true,
             "write_to_chatmods_restricted_channels": true,
+            "create_channels": true,
             "delete_channels": true,
             "restore_channels": true,
             "view_deleted_messages": true,
@@ -113,6 +115,7 @@
             "view_chatmods_private_channels": true,
             "write_to_chatadmins_restricted_channels": true,
             "write_to_chatmods_restricted_channels": true,
+            "create_channels": true,
             "delete_channels": true,
             "restore_channels": true,
             "view_deleted_messages": true,

@@ -4,6 +4,7 @@
     },
     "mw-messenger-desc": "Мессенджер с поддержкой множества каналов и викиразметки.",
     "mw-messenger-special-page": "Мессенджер",
+    "mw-messenger-create-messenger-channel-special-page": "Создать канал мессенджера",
     "mw-messenger-send-message-btn": "Отправить сообщение",
     "mw-messenger-delete-message-btn": "Удалить",
     "mw-messenger-edit-message-btn": "Править",
@@ -11,5 +12,9 @@
     "mw-messenger-save-edited-message-btn": "Сохранить",
     "mw-messenger-load-old-messages-btn": "Загрузить старые",
     "mw-messenger-load-newish-messages-btn": "Загрузить новые",
-    "messenger-not-allowed": "К сожалению, вам не разрешено просматриравать мессенджер и общаться в нём."
+    "messenger-not-allowed": "К сожалению, вам не разрешено просматриравать мессенджер и общаться в нём.",
+    "creating-messenger-channels-not-allowed": "К сожалению, вам не разрешено создавать каналы в мессенджере.",
+    "mw-messenger-crete-channel-inputbox-placeholder": "Название канала",
+    "mw-messenger-crete-channel-btn-placeholder": "Создать канал",
+    "mw-messenger-crete-channel-channel-created": "Канал успешно создан."
 }

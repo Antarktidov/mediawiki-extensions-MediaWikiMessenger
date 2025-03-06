@@ -4,6 +4,7 @@
     },
     "mw-messenger-desc": "Multi-channel messenger based on mediawiki. Supports wikitext.",
     "mw-messenger-special-page": "Messenger",
+    "mw-messenger-create-messenger-channel-special-page": "Create Messenger Channel",
     "mw-messenger-send-message-btn": "Send message",
     "mw-messenger-delete-message-btn": "Delete",
     "mw-messenger-edit-message-btn": "Edit",
@@ -11,5 +12,9 @@
     "mw-messenger-save-edited-message-btn": "Save",
     "mw-messenger-load-old-messages-btn": "Load older messages",
     "mw-messenger-load-newish-messages-btn": "Load newish messages",
-    "messenger-not-allowed": "You not allowed to see and use messenger."
+    "messenger-not-allowed": "You not allowed to see and use messenger.",
+    "creating-messenger-channels-not-allowed": "You not allowed to create messenger channels.",
+    "mw-messenger-crete-channel-inputbox-placeholder": "Channel name",
+    "mw-messenger-crete-channel-btn-placeholder": "Create channel",
+    "mw-messenger-crete-channel-channel-created": "Channel created successfully."
 }

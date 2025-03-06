@@ -4,6 +4,7 @@
     },
     "mw-messenger-desc": "About this app",
     "mw-messenger-special-page": "Title of Special:Messenger",
+    "mw-messenger-create-messenger-channel-special-page": "Title of Special:CreateMessengerChannel",
     "mw-messenger-send-message-btn": "Send message button on Special:Messenger",
     "mw-messenger-delete-message-btn": "Delete message button on Special:Messenger",
     "mw-messenger-edit-message-btn": "Edit message button on Special:Messenger",
@@ -11,5 +12,9 @@
     "mw-messenger-save-edited-message-btn": "Save edited message button on Special:Messenger",
     "mw-messenger-load-old-messages-btn": "Load older messages button on Special:Messenger",
     "mw-messenger-load-newish-messages-btn": "Load newish messages button on Special:Messenger",
-    "messenger-not-allowed": "Message seeing by users who not allowed to use messenger"
+    "messenger-not-allowed": "Message seeing by users who not allowed to use messenger",
+    "creating-messenger-channels-not-allowed": "Message seeing by users who not allowed to create messenger channels",
+    "mw-messenger-crete-channel-inputbox-placeholder": "Inputbox placeholder on Special:CreateMessengerChannel",
+    "mw-messenger-crete-channel-btn-placeholder": "Create channel button on Special:CreateMessengerChannel",
+    "mw-messenger-crete-channel-channel-created": "Message about successful creation of channel on Special:CreateMessengerChannel"
 }
