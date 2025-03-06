@@ -7,5 +7,7 @@
     "mw-messenger-send-message-btn": "Отправить сообщение",
     "mw-messenger-delete-message-btn": "Удалить",
     "mw-messenger-edit-message-btn": "Править",
+    "mw-messenger-cancel-edit-message-btn": "Отменить",
+    "mw-messenger-save-edited-message-btn": "Сохранить",
     "messenger-not-allowed": "К сожалению, вам не разрешено просматриравать мессенджер и общаться в нём."
 }

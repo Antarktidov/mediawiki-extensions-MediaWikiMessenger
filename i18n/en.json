@@ -7,5 +7,7 @@
     "mw-messenger-send-message-btn": "Send message",
     "mw-messenger-delete-message-btn": "Delete",
     "mw-messenger-edit-message-btn": "Edit",
+    "mw-messenger-cancel-edit-message-btn": "Cancel",
+    "mw-messenger-save-edited-message-btn": "Save",
     "messenger-not-allowed": "You not allowed to see and use messenger."
 }

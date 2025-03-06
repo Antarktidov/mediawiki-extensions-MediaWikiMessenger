@@ -66,8 +66,8 @@ class Messenger extends \SpecialPage {
 											<form @submit.prevent="updateMyMessage(message.mw_messenger_message_id)">
 												<textarea v-model="this.editedMessage.text" name="editedMessage" id="editedMessage"></textarea>
 												<div class="mw-messenger-message-editor-footer-btns">
-													<button type="submit">Сохранить</button>
-													<button @click.prevent="closeMessageEditor(message.mw_messenger_message_id)" type="button" class="btn btn-danger">Отменить</button>
+													<button type="submit">{{mwMessengerSaveEditedMessageBtnTxt}}</button>
+													<button @click.prevent="closeMessageEditor(message.mw_messenger_message_id)" type="button" class="btn btn-danger">{{mwMessengerCancelEditMessageBtnTxt}}</button>
 												</div>
 											</form>
 										</div>

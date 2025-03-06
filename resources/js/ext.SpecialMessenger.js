@@ -14,6 +14,8 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 mwMessengerSendMessageBtnTxt: '',
                 mwMessengerEditMessageBtnTxt: '',
                 mwMessengerDeleteMessageBtnTxt: '',
+                mwMessengerCancelEditMessageBtnTxt: '',
+                mwMessengerSaveEditedMessageBtnTxt: '',
                 myMessage: {
                     text: ''
                 },
@@ -29,11 +31,15 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
         beforeMount() {
             this.getChannels();
             this.scriptPath = mw.config.get('wgScriptPath');
+
             this.mwMessengerSendMessageBtnTxt = mw.msg('mw-messenger-send-message-btn');
             this.mwMessengerEditMessageBtnTxt = mw.msg('mw-messenger-edit-message-btn');
+            this.mwMessengerCancelEditMessageBtnTxt = mw.msg('mw-messenger-cancel-edit-message-btn');
+            this.mwMessengerSaveEditedMessageBtnTxt = mw.msg('mw-messenger-save-edited-message-btn');
             this.mwMessengerDeleteMessageBtnTxt = mw.msg('mw-messenger-delete-message-btn');
+
             this.isUserCanDeleteOtherUsersMessages = mw.config.get('isUserCanDeleteOtherUsersMessages');
-            this.userId = mw.config.get('userId');           
+            this.userId = mw.config.get('userId');
         },
         methods: {
             async parseWikiText(textBeforeParsing) {

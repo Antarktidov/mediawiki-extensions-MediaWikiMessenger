@@ -7,5 +7,7 @@
     "mw-messenger-send-message-btn": "Send message button on Special:Messenger",
     "mw-messenger-delete-message-btn": "Delete message button on Special:Messenger",
     "mw-messenger-edit-message-btn": "Edit message button on Special:Messenger",
+    "mw-messenger-cancel-edit-message-btn": "Cancel edit message button on Special:Messenger",
+    "mw-messenger-save-edited-message-btn": "Save edited message button on Special:Messenger",
     "messenger-not-allowed": "Message seeing by users who not allowed to use messenger"
 }
