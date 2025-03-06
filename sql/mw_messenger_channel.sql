@@ -6,5 +6,6 @@ CREATE TABLE /*_*/mw_messenger_channel (
   is_chatadmins_private TINYINT(1) DEFAULT 0 NOT NULL,
   is_writing_restricted_to_chatmods TINYINT(1) DEFAULT 0 NOT NULL,
   is_writing_restricted_to_chatadmins TINYINT(1) DEFAULT 0 NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   PRIMARY KEY(mw_messenger_channel_id)
 ) /*$wgDBTableOptions*/;
