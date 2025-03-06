@@ -21,5 +21,17 @@
     "mw-messenger-crete-channel-channel-created": "Канал успешно создан.",
     "mw-messenger-delete-channel-channel-deleted": "Канал успешно удалён.",
     "mw-messenger-delete-message-choose-channel": "Выберите канал",
-    "mw-messenger-delete-message-delete-channel-btn": "Удалить канал"
+    "mw-messenger-delete-message-delete-channel-btn": "Удалить канал",
+
+    "group-chatadmin": "Администраторы чата",
+    "group-chatadmin-member": "администратор чата",
+    "grouppage-chatadmin": "{{ns:project}}:Администраторы чата",
+
+    "group-chatmod": "Модераторы чата",
+    "group-chatmod-member": "модератор чата",
+	"grouppage-chatmod": "{{ns:project}}:Модераторы чата",
+
+    "group-chatguest": "Гости чата",
+    "group-chatguest-member": "гость чата",
+    "grouppage-chatguest": "{{ns:project}}:Гости чата"
 }
