@@ -21,7 +21,7 @@ class Messenger extends \SpecialPage {
 
 		$user = $this->getUser();
 
-		if (!$user->isAllowed( 'chat' ) ) {
+		if (!$user->isAllowed( 'see_chat' ) ) {
 				$out->addWikiMsg( 'messenger-not-allowed' );
 				return;
 		}
