@@ -5,6 +5,7 @@
     "mw-messenger-desc": "Multi-channel messenger based on mediawiki. Supports wikitext.",
     "mw-messenger-special-page": "Messenger",
     "mw-messenger-create-messenger-channel-special-page": "Create Messenger Channel",
+    "mw-messenger-delete-messenger-channel-special-page": "Delete Messenger Channel",
     "mw-messenger-send-message-btn": "Send message",
     "mw-messenger-delete-message-btn": "Delete",
     "mw-messenger-edit-message-btn": "Edit",
@@ -14,7 +15,11 @@
     "mw-messenger-load-newish-messages-btn": "Load newish messages",
     "messenger-not-allowed": "You not allowed to see and use messenger.",
     "creating-messenger-channels-not-allowed": "You not allowed to create messenger channels.",
+    "deleting-messenger-channels-not-allowed": "You not allowed to delete messenger channels.",
     "mw-messenger-crete-channel-inputbox-placeholder": "Channel name",
     "mw-messenger-crete-channel-btn-placeholder": "Create channel",
-    "mw-messenger-crete-channel-channel-created": "Channel created successfully."
+    "mw-messenger-crete-channel-channel-created": "Channel created successfully.",
+    "mw-messenger-delete-channel-channel-deleted": "Channel deleted successfully.",
+    "mw-messenger-delete-message-choose-channel": "Choose channel",
+    "mw-messenger-delete-message-delete-channel-btn": "Delete channel"
 }

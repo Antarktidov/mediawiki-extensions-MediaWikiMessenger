@@ -14,7 +14,8 @@
     },
     "SpecialPages": {
 		"Messenger": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\Messenger",
-		"CreateMessengerChannel": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\CreateMessengerChannel"
+		"CreateMessengerChannel": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\CreateMessengerChannel",
+        "DeleteMessengerChannel": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\DeleteMessengerChannel"
 	},
     "ResourceModules": {
         "ext.MediaWikiMessenger": {

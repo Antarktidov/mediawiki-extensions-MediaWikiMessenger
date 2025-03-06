@@ -12,10 +12,12 @@ $specialPageAliases = [];
 $specialPageAliases['en'] = [
 	'Messenger' => [ 'Messenger' ],
 	'CreateMessengerChannel' => [ 'CreateMessengerChannel' ],
+	'DeleteMessengerChannel' => [ 'DeleteMessengerChannel' ],
 ];
 
 /** Russian */
 $specialPageAliases['ru'] = [
 	'Messenger' => [ 'Мессенджер' ],
 	'CreateMessengerChannel' => [ 'Создать канал мессенджера' ],
+	'DeleteMessengerChannel' => [ 'Удалить канал мессенджера' ],
 ];
