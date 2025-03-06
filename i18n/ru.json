@@ -9,5 +9,7 @@
     "mw-messenger-edit-message-btn": "Править",
     "mw-messenger-cancel-edit-message-btn": "Отменить",
     "mw-messenger-save-edited-message-btn": "Сохранить",
+    "mw-messenger-load-old-messages-btn": "Загрузить старые",
+    "mw-messenger-load-newish-messages-btn": "Загрузить новые",
     "messenger-not-allowed": "К сожалению, вам не разрешено просматриравать мессенджер и общаться в нём."
 }

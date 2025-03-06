@@ -16,6 +16,8 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 mwMessengerDeleteMessageBtnTxt: '',
                 mwMessengerCancelEditMessageBtnTxt: '',
                 mwMessengerSaveEditedMessageBtnTxt: '',
+                mwMessengerLoadOldMessagesBtnTxt: '',
+                mwMessengerLoadNewishMessagesBtnTxt: '',
                 myMessage: {
                     text: ''
                 },
@@ -26,6 +28,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 isChannelSet: false,
                 userId: 0,
                 globalIsMessageEditorOpen: false,
+                currentMessagesPage: 0
             }
         },
         beforeMount() {
@@ -37,10 +40,22 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             this.mwMessengerCancelEditMessageBtnTxt = mw.msg('mw-messenger-cancel-edit-message-btn');
             this.mwMessengerSaveEditedMessageBtnTxt = mw.msg('mw-messenger-save-edited-message-btn');
             this.mwMessengerDeleteMessageBtnTxt = mw.msg('mw-messenger-delete-message-btn');
+            this.mwMessengerLoadOldMessagesBtnTxt = mw.msg('mw-messenger-load-old-messages-btn');
+            this.mwMessengerLoadNewishMessagesBtnTxt = mw.msg('mw-messenger-load-newish-messages-btn');
 
             this.isUserCanDeleteOtherUsersMessages = mw.config.get('isUserCanDeleteOtherUsersMessages');
             this.userId = mw.config.get('userId');
         },
+        /*mounted() {
+            setInterval(() => {
+                if (this.currentMessagesPage === 0 &&
+                    this.globalIsMessageEditorOpen === false &&
+                    this.isChannelSet === true
+                ) {
+                    this.getChannelMessages(this.currentChannelId);
+                }
+              }, 2000)
+        },*/
         methods: {
             async parseWikiText(textBeforeParsing) {
                 try {
@@ -67,12 +82,18 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     console.error('Error when getting channels:', error);
                 });
             },
-            async getChannelMessages(channelId) {
+            async getChannelMessages(channelId, messagesPage = 0) {
                 try {
+
+                    if (this.currentChannelId !== channelId) {
+                        this.currentMessagesPage = 0;
+                    }
+
                     const data = await api.get({
                         action: 'get_mw_messenger_channel_messages',
                         format: 'json',
-                        channel_id: channelId
+                        channel_id: channelId,
+                        page: messagesPage
                     });
                     this.messages = data['get_mw_messenger_channel_messages'].messages;
                     console.log(this.messages);
@@ -169,7 +190,17 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 }).fail((error) => {
                     console.error('Error when updating message:', error);
                 });
-            }
+            },
+            getMoreMessages(channelId) {
+                this.getChannelMessages(channelId, ++this.currentMessagesPage);
+            },
+            getNewestMessages(channelId) {
+                if (this.currentMessagesPage <= 0) {
+                    return;
+                }
+
+                this.getChannelMessages(channelId, --this.currentMessagesPage);
+            },
         }
     });
 

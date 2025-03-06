@@ -43,6 +43,7 @@ class Messenger extends \SpecialPage {
 								</ul>
 							</div>
 							<div v-if="isChannelSet" id="mw-messenger-channel-area">
+								<button class="load-older-btn" @click.prevent="getMoreMessages(currentChannelId)">{{mwMessengerLoadOldMessagesBtnTxt}}</button>
 								<div id="mw-messenger-channel-messages">
 									<div v-for="message in reversedMessages" class="mw-messenger-message">
 										<div v-if="!message.isMessageEditorOpen" class="mw-messenger-message-message-editor-closed">
@@ -73,6 +74,7 @@ class Messenger extends \SpecialPage {
 										</div>
 									</div>
 								</div>
+								<button class="load-newest-btn" @click.prevent="getNewestMessages(currentChannelId)">{{mwMessengerLoadNewishMessagesBtnTxt}}</button>
 								<form id="mw-messenger-textarea-send-message" @submit.prevent="sendMyMessage">
 									<textarea v-model="myMessage.text" name="message" id="message-text"></textarea>
 									<button>{{mwMessengerSendMessageBtnTxt}}</button>

@@ -9,5 +9,7 @@
     "mw-messenger-edit-message-btn": "Edit message button on Special:Messenger",
     "mw-messenger-cancel-edit-message-btn": "Cancel edit message button on Special:Messenger",
     "mw-messenger-save-edited-message-btn": "Save edited message button on Special:Messenger",
+    "mw-messenger-load-old-messages-btn": "Load older messages button on Special:Messenger",
+    "mw-messenger-load-newish-messages-btn": "Load newish messages button on Special:Messenger",
     "messenger-not-allowed": "Message seeing by users who not allowed to use messenger"
 }

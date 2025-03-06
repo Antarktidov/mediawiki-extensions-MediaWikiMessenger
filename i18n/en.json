@@ -9,5 +9,7 @@
     "mw-messenger-edit-message-btn": "Edit",
     "mw-messenger-cancel-edit-message-btn": "Cancel",
     "mw-messenger-save-edited-message-btn": "Save",
+    "mw-messenger-load-old-messages-btn": "Load older messages",
+    "mw-messenger-load-newish-messages-btn": "Load newish messages",
     "messenger-not-allowed": "You not allowed to see and use messenger."
 }

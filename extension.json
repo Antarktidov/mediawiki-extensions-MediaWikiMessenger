@@ -30,7 +30,9 @@
                 "mw-messenger-edit-message-btn",
                 "mw-messenger-delete-message-btn",
                 "mw-messenger-cancel-edit-message-btn",
-                "mw-messenger-save-edited-message-btn"
+                "mw-messenger-save-edited-message-btn",
+                "mw-messenger-load-old-messages-btn",
+                "mw-messenger-load-newish-messages-btn"
             ]
         }
     },

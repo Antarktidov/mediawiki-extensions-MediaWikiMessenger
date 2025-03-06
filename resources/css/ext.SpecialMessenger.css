@@ -39,6 +39,13 @@
         gap: 10px;
         margin-top: 10px
     }
+
+    & .load-newest-btn {
+        margin-bottom: 20px;
+    }
+    & .load-older-btn {
+        margin-bottom: 10px;
+    }
 }
 
 [v-cloak] {
