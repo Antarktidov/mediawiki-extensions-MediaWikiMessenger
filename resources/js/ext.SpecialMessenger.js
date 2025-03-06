@@ -157,7 +157,18 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             },
             updateMyMessage(messageId) {
                 console.log('Кнопка, отвечающая за обновление сообщения, нажата');
-                // Добавьте здесь код для обновления сообщения
+                api.post({
+                    action: 'edit_message_mw_messenger',
+                    format: 'json',
+                    message_id: messageId,
+                    edited_message: this.editedMessage.text
+                }).done((data) => {
+                    console.log(data);
+                    this.closeMessageEditor(messageId);
+                    this.getChannelMessages(this.currentChannelId);
+                }).fail((error) => {
+                    console.error('Error when updating message:', error);
+                });
             }
         }
     });
