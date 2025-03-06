@@ -74,7 +74,7 @@ class Messenger extends \SpecialPage {
 										</div>
 									</div>
 								</div>
-								<button class="load-newest-btn" @click.prevent="getNewestMessages(currentChannelId)">{{mwMessengerLoadNewishMessagesBtnTxt}}</button>
+								<button v-if="currentMessagesPage" class="load-newest-btn" @click.prevent="getNewestMessages(currentChannelId)">{{mwMessengerLoadNewishMessagesBtnTxt}}</button>
 								<form id="mw-messenger-textarea-send-message" @submit.prevent="sendMyMessage">
 									<textarea v-model="myMessage.text" name="message" id="message-text"></textarea>
 									<button>{{mwMessengerSendMessageBtnTxt}}</button>
