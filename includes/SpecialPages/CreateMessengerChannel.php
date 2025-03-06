@@ -8,20 +8,20 @@ use MediaWiki\MediaWikiServices;
 
 class CreateMessengerChannel extends \SpecialPage {
 
-	public function __construct() {
-		parent::__construct( 'CreateMessengerChannel' );
-	}
+    public function __construct() {
+        parent::__construct( 'CreateMessengerChannel' );
+    }
 
     public function execute( $sub ) {
-		$out = $this->getOutput();
-		$out->setPageTitleMSg( $this->msg( 'mw-messenger-create-messenger-channel-special-page' ) );
+        $out = $this->getOutput();
+        $out->setPageTitleMSg( $this->msg( 'mw-messenger-create-messenger-channel-special-page' ) );
 
         $user = $this->getUser();
 
-		if (!$user->isAllowed( 'see_chat' ) &&  !$user->isAllowed( 'create_channels' )) {
-			$out->addWikiMsg( 'creating-messenger-channels-not-allowed' );
+        if (!$user->isAllowed( 'see_chat' ) &&  !$user->isAllowed( 'create_channels' )) {
+            $out->addWikiMsg( 'creating-messenger-channels-not-allowed' );
             return;
-		}
+        }
 
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
@@ -35,7 +35,8 @@ class CreateMessengerChannel extends \SpecialPage {
         } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $channel_name = $this->test_input($_POST["channel_name"]);
 
-            $dbProvider = MediaWikiServices::getInstance()->getConnectionProvider();
+            try {
+                $dbProvider = MediaWikiServices::getInstance()->getConnectionProvider();
                 $dbw = $dbProvider->getPrimaryDatabase();
 
                 $dbw->insert(
@@ -48,6 +49,10 @@ class CreateMessengerChannel extends \SpecialPage {
                 );
 
                 $out->addWikiMsg('mw-messenger-crete-channel-channel-created');
+            } catch (DBQueryError $e) {
+                $out->addWikiMsg('mw-messenger-crete-channel-channel-creation-error');
+                $out->addHtml('<pre>' . htmlspecialchars($e->getMessage()) . '</pre>');
+            }
         }
     }
 
@@ -56,5 +61,5 @@ class CreateMessengerChannel extends \SpecialPage {
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
         return $data;
-      }
+    }
 }
