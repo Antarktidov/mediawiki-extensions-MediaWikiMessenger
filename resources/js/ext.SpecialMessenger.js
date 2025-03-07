@@ -28,7 +28,8 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 isChannelSet: false,
                 userId: 0,
                 globalIsMessageEditorOpen: false,
-                currentMessagesPage: 0
+                currentMessagesPage: 0,
+                globalLastMessageCreatedAt: '',
             }
         },
         beforeMount() {
@@ -46,16 +47,6 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             this.isUserCanDeleteOtherUsersMessages = mw.config.get('isUserCanDeleteOtherUsersMessages');
             this.userId = mw.config.get('userId');
         },
-        /*mounted() {
-            setInterval(() => {
-                if (this.currentMessagesPage === 0 &&
-                    this.globalIsMessageEditorOpen === false &&
-                    this.isChannelSet === true
-                ) {
-                    this.getChannelMessages(this.currentChannelId);
-                }
-              }, 2000)
-        },*/
         methods: {
             async parseWikiText(textBeforeParsing) {
                 try {
@@ -107,6 +98,8 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
 
                     this.currentChannelId = channelId;
                     this.isChannelSet = true;
+
+                    this.globalLastMessageCreatedAt = this.reversedMessages[this.reversedMessages.length-1].created_at;
                 } catch (error) {
                     console.error('Error when getting messages:', error);
                 }

@@ -63,7 +63,7 @@ class GetChannelMessages extends ApiBase {
             ->select( ['mw_messenger_message_id', 'mw_messenger_message_user_id',
             'mw_messenger_message_channel_id', 'is_editing_restricted_to_chatmods',
             'is_editing_restricted_to_chatadmins',
-            'is_deleted'] )
+            'is_deleted', 'created_at'] )
             ->from('mw_messenger_message')
             ->where('is_deleted = 0')
             ->where("mw_messenger_message_channel_id = $channel_id")
