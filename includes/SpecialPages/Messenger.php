@@ -33,6 +33,7 @@ class Messenger extends \SpecialPage {
 		$out->addJsConfigVars([
 			'isUserCanDeleteOtherUsersMessages' => $isUserCanDeleteOtherUsersMessages,
 			'userId' => $userId,
+			'wgChatSocialAvatars' => class_exists( 'SocialProfileHooks' ),
 		]);
 
         $out->addHTML(	
@@ -47,16 +48,19 @@ class Messenger extends \SpecialPage {
 								<div id="mw-messenger-channel-messages">
 									<div v-for="message in reversedMessages" class="mw-messenger-message">
 										<div v-if="!message.isMessageEditorOpen" class="mw-messenger-message-message-editor-closed">
-											<div class="mw-messenger-message-header">
-												<span class="mw-messenger-message-author">
+											<div v-if="wgChatSocialAvatars" class="mw-messenger-user-avatar" v-html="message.user_avatar"></div>
+											<div class="mw-messenger-not-avatar">
+												<div class="mw-messenger-message-header">
+													<span class="mw-messenger-message-author">
 													<a v-bind:href="scriptPath+\'/index.php/User:\'+message.user_name">{{message.user_name}}</a>
-												</span>
-												<span class="mw-messenger-message-header-right">
-													<a @click.prevent="openMessageEditor(message.mw_messenger_message_id)" href="#" v-if="userId === +message.mw_messenger_message_user_id">{{mwMessengerEditMessageBtnTxt}}</a>
-													<a @click.prevent="deletedMessage(message.mw_messenger_message_id)" href="#" v-if="userId === +message.mw_messenger_message_user_id || isUserCanDeleteOtherUsersMessages">{{mwMessengerDeleteMessageBtnTxt}}</a>
-												</span>
+													</span>
+													<span class="mw-messenger-message-header-right">
+														<a @click.prevent="openMessageEditor(message.mw_messenger_message_id)" href="#" v-if="userId === +message.mw_messenger_message_user_id">{{mwMessengerEditMessageBtnTxt}}</a>
+														<a @click.prevent="deletedMessage(message.mw_messenger_message_id)" href="#" v-if="userId === +message.mw_messenger_message_user_id || isUserCanDeleteOtherUsersMessages">{{mwMessengerDeleteMessageBtnTxt}}</a>
+													</span>
+												</div>
+												<div class="mw-messenger-message-body" v-html="message.parsedMessageText"></div>
 											</div>
-											<div class="mw-messenger-message-body" v-html="message.parsedMessageText"></div>
 										</div>
 										<div v-if="message.isMessageEditorOpen" class="message-editor-open">
 											<div class="mw-messenger-message-header">
