@@ -2,8 +2,6 @@
 
 namespace MediaWiki\Extension\MediaWikiMessenger\SpecialPages;
 
-use MediaWiki\Registration\ExtensionRegistry;
-
 class Messenger extends \SpecialPage {
 
 	public function __construct() {
