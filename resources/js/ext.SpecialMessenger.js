@@ -109,6 +109,8 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     this.isChannelSet = true;
 
                     this.globalLastMessageCreatedAt = this.reversedMessages[this.reversedMessages.length-1].created_at;
+
+                    mw.loader.load(this.scriptPath + '/extensions/PortableInfobox/resources/PortableInfobox.js');
                 } catch (error) {
                     console.error('Error when getting messages:', error);
                 }

@@ -36,6 +36,8 @@ class Messenger extends \SpecialPage {
 			'wgChatSocialAvatars' => class_exists( 'SocialProfileHooks' ),
 		]);
 
+		$out->addModules(['ext.PortableInfobox.styles']);
+
         $out->addHTML(	
 						'<div id="mw-messenger" v-cloak>
 							<div id="mw-messenger-channels-list">
