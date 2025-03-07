@@ -2,6 +2,8 @@
 
 namespace MediaWiki\Extension\MediaWikiMessenger\SpecialPages;
 
+use MediaWiki\Registration\ExtensionRegistry;
+
 class Messenger extends \SpecialPage {
 
 	public function __construct() {
@@ -35,6 +37,8 @@ class Messenger extends \SpecialPage {
 			'userId' => $userId,
 			'wgChatSocialAvatars' => class_exists( 'SocialProfileHooks' ),
 		]);
+
+		$out->addModules(['ext.PortableInfobox.styles']);
 
         $out->addHTML(	
 						'<div id="mw-messenger" v-cloak>
