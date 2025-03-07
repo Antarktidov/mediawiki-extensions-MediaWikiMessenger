@@ -1,6 +1,7 @@
 mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
     const Vue = require( 'vue' );
-//Vue.config.devtools = true; // Включение режима разработки
+    //Vue.config.devtools = true; // Включение режима разработки
+    console.log(Vue.config);
     const api = new mw.Api();
 
     const app = Vue.createApp({
@@ -30,6 +31,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 globalIsMessageEditorOpen: false,
                 currentMessagesPage: 0,
                 globalLastMessageCreatedAt: '',
+                wgChatSocialAvatars: false,
             }
         },
         beforeMount() {
@@ -45,6 +47,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             this.mwMessengerLoadNewishMessagesBtnTxt = mw.msg('mw-messenger-load-newish-messages-btn');
 
             this.isUserCanDeleteOtherUsersMessages = mw.config.get('isUserCanDeleteOtherUsersMessages');
+            this.wgChatSocialAvatars = mw.config.get('wgChatSocialAvatars');
             this.userId = mw.config.get('userId');
         },
         methods: {
@@ -92,6 +95,12 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     for (let i = 0; i < this.messages.length; i++) {
                         this.messages[i].parsedMessageText = await this.parseWikiText(this.messages[i].mw_messenger_message_revision_text);
                         this.messages[i].isMessageEditorOpen = false; // Ensure this property exists
+
+                        if (this.wgChatSocialAvatars) {
+                            this.messages[i].user_avatar = await this.parseWikiText('{{#avatar:' + this.messages[i].user_name + '}}');
+                        }
+
+                        console.log(this.messages[i].user_name);
                     }
 
                     this.reversedMessages = this.reverseArray(this.messages);

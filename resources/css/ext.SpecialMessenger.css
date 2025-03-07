@@ -46,6 +46,11 @@
     & .load-older-btn {
         margin-bottom: 10px;
     }
+
+    & .mw-messenger-message-message-editor-closed {
+        display: flex;
+        gap: 30px;
+    }
 }
 
 [v-cloak] {
