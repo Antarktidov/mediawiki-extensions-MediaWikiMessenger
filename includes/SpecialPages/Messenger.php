@@ -37,6 +37,7 @@ class Messenger extends \SpecialPage {
 		]);
 
 		$out->addModules(['ext.PortableInfobox.styles']);
+		$out->addModules(['ext.SpoilerSpan']);
 
         $out->addHTML(	
 						'<div id="mw-messenger" v-cloak>

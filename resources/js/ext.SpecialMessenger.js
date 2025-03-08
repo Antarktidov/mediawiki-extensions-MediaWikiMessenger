@@ -111,6 +111,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     this.globalLastMessageCreatedAt = this.reversedMessages[this.reversedMessages.length-1].created_at;
 
                     mw.loader.load(this.scriptPath + '/extensions/PortableInfobox/resources/PortableInfobox.js');
+                    mw.loader.load(this.scriptPath + '/extensions/SpoilerSpan/resources/ext.SpoilerSpan.js');
                 } catch (error) {
                     console.error('Error when getting messages:', error);
                 }
