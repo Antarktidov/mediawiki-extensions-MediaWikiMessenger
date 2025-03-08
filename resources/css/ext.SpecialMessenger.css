@@ -51,6 +51,27 @@
         display: flex;
         gap: 30px;
     }
+
+    & .mw-messenger-message-reactions-reaction {
+        background: lightgray;
+        padding: 5px;
+        border-radius: 6px;
+        padding-left: 8px;
+        padding-right: 8px;
+    
+        margin-right: 10px;
+    
+        & .mw-messenger-message-reactions-reaction-reaction {
+            margin-right: 2px;
+    
+            & img {
+                height: 15px;
+                width: 18px;
+                margin-right: 2px;
+            }
+        }
+    }
+    
 }
 
 [v-cloak] {

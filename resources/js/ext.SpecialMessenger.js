@@ -32,6 +32,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 currentMessagesPage: 0,
                 globalLastMessageCreatedAt: '',
                 wgChatSocialAvatars: false,
+                customReactions: [],
             }
         },
         beforeMount() {
@@ -49,6 +50,10 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             this.isUserCanDeleteOtherUsersMessages = mw.config.get('isUserCanDeleteOtherUsersMessages');
             this.wgChatSocialAvatars = mw.config.get('wgChatSocialAvatars');
             this.userId = mw.config.get('userId');
+
+            this.getCustomReactions();
+
+            console.log(this.customReactions);
         },
         mounted() {
             setInterval(async () => {
@@ -110,6 +115,27 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     console.error('Ошибка при преобразовании вики-разметки:', error);
                     return '';
                 }
+            },
+            getCustomReactions() {
+                fetch(this.scriptPath + '/index.php/MediaWiki:MessengerReactions?action=raw')
+                    .then(response => response.text())
+                    .then(text => {
+                        console.log(text);
+
+                        const reactionsLines = text.split('\n');
+                        console.log(reactionsLines);
+
+                        reactionsLines.forEach(line => {
+                            const [reaction_name, reaction_image] = line.split(' ');
+                            this.customReactions.push({
+                                reaction_name,
+                                reaction_image
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Ошибка при получении кастомных реакций:', error);
+                    });
             },
             getChannels() {
                 api.get({

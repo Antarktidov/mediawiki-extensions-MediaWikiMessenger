@@ -63,6 +63,16 @@ class Messenger extends \SpecialPage {
 													</span>
 												</div>
 												<div class="mw-messenger-message-body" v-html="message.parsedMessageText"></div>
+												<div class="mw-messenger-message-reactions">
+													<span class="mw-messenger-message-reactions-reaction">
+														<span class="mw-messenger-message-reactions-reaction-reaction">😀</span>
+														<span class="mw-messenger-message-reactions-reaction-counter">1</span>
+													</span>
+													<span class="mw-messenger-message-reactions-reaction">
+														<span class="mw-messenger-message-reactions-reaction-reaction"><img src="http://localhost/mediawiki-1.43.0/index.php/Служебная:FilePath/M.png"></span>
+														<span class="mw-messenger-message-reactions-reaction-counter">1</span>
+													</span>
+												</div>
 											</div>
 										</div>
 										<div v-if="message.isMessageEditorOpen" class="message-editor-open">
