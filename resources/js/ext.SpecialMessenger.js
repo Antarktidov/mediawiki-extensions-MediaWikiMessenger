@@ -34,6 +34,14 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 wgChatSocialAvatars: false,
                 customReactions: [],
                 allEmojis: [],
+                sitetitle: '',
+
+                mwMessengerReactionsGroupSmileysAndEmotion: '',
+                mwMessengerReactionsGroupPeopleAndBody: '',
+                mwMessengerReactionsGroupAnimalsAndNature: '',
+                mwMessengerReactionsGroupFoodAndDrink: '',
+                mwMessengerReactionsGroupTravelAndPlaces: '',
+                mwMessengerReactionsGroupFlags: ''
             }
         },
         beforeMount() {
@@ -48,13 +56,21 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             this.mwMessengerLoadOldMessagesBtnTxt = mw.msg('mw-messenger-load-old-messages-btn');
             this.mwMessengerLoadNewishMessagesBtnTxt = mw.msg('mw-messenger-load-newish-messages-btn');
 
+            this.mwMessengerReactionsGroupSmileysAndEmotion = mw.msg('mw-messenger-reactions-group-smileys-and-emotion');
+            this.mwMessengerReactionsGroupPeopleAndBody = mw.msg('mw-messenger-reactions-group-people-and-body');
+            this.mwMessengerReactionsGroupAnimalsAndNature = mw.msg('mw-messenger-reactions-group-animals-and-nature');
+            this.mwMessengerReactionsGroupFoodAndDrink = mw.msg('mw-messenger-reactions-group-food-and-drink');
+            this.mwMessengerReactionsGroupTravelAndPlaces = mw.msg('mw-messenger-reactions-group-travel-and-places');
+            this.mwMessengerReactionsGroupFlags = mw.msg('mw-messenger-reactions-group-flags');
+
+            this.sitetitle = mw.msg('sitetitle');
+
             this.isUserCanDeleteOtherUsersMessages = mw.config.get('isUserCanDeleteOtherUsersMessages');
             this.wgChatSocialAvatars = mw.config.get('wgChatSocialAvatars');
             this.userId = mw.config.get('userId');
 
             this.getCustomReactions();
             this.allEmojis = this.getStandardEmojis();
-
 
             console.log(this.allEmojis);
         },
@@ -142,7 +158,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 // Диапазоны Unicode эмодзи (актуальные на 2023 год)
                 const emojiCategories = [
                 {
-                    name: "Smileys & Emotion",
+                    name: this.mwMessengerReactionsGroupSmileysAndEmotion,
                     ranges: [
                     { start: 0x1F600, end: 0x1F64F }, // Основные лица
                     { start: 0x1F910, end: 0x1F92F }, // Дополнительные лица
@@ -151,14 +167,14 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     ],
                 },
                 {
-                    name: "People & Body",
+                    name: this.mwMessengerReactionsGroupPeopleAndBody,
                     ranges: [
                     { start: 0x1F9B0, end: 0x1F9B9 }, // Волосы и тело
                     { start: 0x1F9D0, end: 0x1F9DF }, // Фантастические существа
                     ],
                 },
                 {
-                    name: "Animals & Nature",
+                    name: this.mwMessengerReactionsGroupAnimalsAndNature,
                     ranges: [
                     { start: 0x1F400, end: 0x1F43F }, // Животные
                     { start: 0x1F980, end: 0x1F98F }, // Насекомые
@@ -166,20 +182,20 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     ],
                 },
                 {
-                    name: "Food & Drink",
+                    name: this.mwMessengerReactionsGroupFoodAndDrink,
                     ranges: [
                     { start: 0x1F32D, end: 0x1F37F }, // Еда и напитки
                     ],
                 },
                 {
-                    name: "Travel & Places",
+                    name: this.mwMessengerReactionsGroupTravelAndPlaces,
                     ranges: [
                     { start: 0x1F680, end: 0x1F6FF }, // Транспорт
                     { start: 0x1F3A0, end: 0x1F3FF }, // Места и объекты
                     ],
                 },
                 {
-                    name: "Flags",
+                    name: this.mwMessengerReactionsGroupFlags,
                     ranges: [
                     { start: 0x1F1E6, end: 0x1F1FF }, // Флаги стран
                     { start: 0x1F3F4, end: 0x1F3F4 }, // Особые флаги

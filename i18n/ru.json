@@ -33,5 +33,12 @@
 
     "group-chatguest": "Гости чата",
     "group-chatguest-member": "гость чата",
-    "grouppage-chatguest": "{{ns:project}}:Гости чата"
+    "grouppage-chatguest": "{{ns:project}}:Гости чата",
+
+    "mw-messenger-reactions-group-smileys-and-emotion": "Смайлы и Эмоции",
+    "mw-messenger-reactions-group-people-and-body": "Люди и Тело",
+    "mw-messenger-reactions-group-animals-and-nature": "Животные и Природа",
+    "mw-messenger-reactions-group-food-and-drink": "Еда и Напитки",
+    "mw-messenger-reactions-group-travel-and-places": "Путешетсвия и Места",
+    "mw-messenger-reactions-group-flags": "Флаги"
 }

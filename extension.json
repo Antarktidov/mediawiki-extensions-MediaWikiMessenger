@@ -34,7 +34,16 @@
                 "mw-messenger-cancel-edit-message-btn",
                 "mw-messenger-save-edited-message-btn",
                 "mw-messenger-load-old-messages-btn",
-                "mw-messenger-load-newish-messages-btn"
+                "mw-messenger-load-newish-messages-btn",
+
+                "sitetitle",
+
+                "mw-messenger-reactions-group-smileys-and-emotion",
+                "mw-messenger-reactions-group-people-and-body",
+                "mw-messenger-reactions-group-animals-and-nature",
+                "mw-messenger-reactions-group-food-and-drink",
+                "mw-messenger-reactions-group-travel-and-places",
+                "mw-messenger-reactions-group-flags"
             ]
         }
     },

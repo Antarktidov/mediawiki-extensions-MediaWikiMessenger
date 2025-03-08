@@ -21,5 +21,12 @@
     "mw-messenger-crete-channel-channel-created": "Message about successful creation of channel on Special:CreateMessengerChannel",
     "mw-messenger-delete-channel-channel-deleted": "Message about successful deletion of channel on Special:DeleteMessengerChannel",
     "mw-messenger-delete-message-choose-channel": "Choose channel msg on Special:DeleteMessengerChannel",
-    "mw-messenger-delete-message-delete-channel-btn": "Delete channel btn on Special:DeleteMessengerChannel"
+    "mw-messenger-delete-message-delete-channel-btn": "Delete channel btn on Special:DeleteMessengerChannel",
+
+    "mw-messenger-reactions-group-smileys-and-emotion": "standard reactions picker group name",
+    "mw-messenger-reactions-group-people-and-body": "standard reactions picker group name",
+    "mw-messenger-reactions-group-animals-and-nature": "standard reactions picker group name",
+    "mw-messenger-reactions-group-food-and-drink": "standard reactions picker group name",
+    "mw-messenger-reactions-group-travel-and-places": "standard reactions picker group name",
+    "mw-messenger-reactions-group-flags": "standard reactions picker group name"
 }

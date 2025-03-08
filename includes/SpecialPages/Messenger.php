@@ -78,7 +78,7 @@ class Messenger extends \SpecialPage {
 															<span class="mw-messenger-message-reactions-reaction-plus">+</span>
 														</span>
 														<span v-show="message.isReactionsPickerOpen" class="reaction-picker">
-															Название вики
+															{{sitetitle}}
 															<span class="reactions-picker-custom-reactions">
 																<span v-for="customReaction in customReactions" class="reactions-picker-custom-reaction">
 																	<img class="custom-reaction-img" :src="scriptPath + \'/index.php/Special:FilePath/\' + customReaction.reaction_image">

@@ -33,6 +33,13 @@
 
     "group-chatguest": "Chat guests",
     "group-chatguest-member": "chat guest",
-    "grouppage-chatguest": "{{ns:project}}:Chat guests"
+    "grouppage-chatguest": "{{ns:project}}:Chat guests",
+
+    "mw-messenger-reactions-group-smileys-and-emotion": "Smileys & Emotion",
+    "mw-messenger-reactions-group-people-and-body": "People & Body",
+    "mw-messenger-reactions-group-animals-and-nature": "Animals & Nature",
+    "mw-messenger-reactions-group-food-and-drink": "Food & Drink",
+    "mw-messenger-reactions-group-travel-and-places": "Travel & Places",
+    "mw-messenger-reactions-group-flags": "Flags"
 
 }
