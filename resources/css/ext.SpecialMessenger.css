@@ -71,7 +71,51 @@
             }
         }
     }
-    
+
+    & .mw-messenger-message-reactions-reaction-super-plus {
+        border: 1px solid lightgray;
+         padding: 4px;
+         border-radius: 6px;
+         padding-left: 12px;
+         padding-right: 12px;
+     
+         margin-right: 10px;
+         color: lightgray;
+
+         cursor: pointer;
+     
+    }
+
+    & .reaction-picker {
+        border: 1px solid lightgray;
+        height: 250px;
+        display: inline-flex;
+        width: 200px;
+        position: fixed;
+        background-color: white;
+
+        overflow-x: scroll;
+        display: flex;
+        flex-direction: column;
+
+        & .reactions-picker-standard-reactions {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    & .custom-reaction-img {
+        height: 20px;
+        width: 22px;
+    }
+    & .reactions-picker-custom-reaction {
+        margin: 1px
+    }
+
+    & .custom-reaction-img,
+    & .emoji-group-emojis {
+        cursor: pointer;
+    }
 }
 
 [v-cloak] {

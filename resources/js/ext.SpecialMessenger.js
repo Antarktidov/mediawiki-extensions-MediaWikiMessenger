@@ -33,6 +33,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 globalLastMessageCreatedAt: '',
                 wgChatSocialAvatars: false,
                 customReactions: [],
+                allEmojis: [],
             }
         },
         beforeMount() {
@@ -52,10 +53,12 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             this.userId = mw.config.get('userId');
 
             this.getCustomReactions();
+            this.allEmojis = this.getStandardEmojis();
 
-            console.log(this.customReactions);
+
+            console.log(this.allEmojis);
         },
-        mounted() {
+        /*mounted() {
             setInterval(async () => {
                 if (this.currentMessagesPage === 0 &&
                     this.globalIsMessageEditorOpen === false &&
@@ -85,9 +88,6 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
 
                                 //console.log(newMessages[i].user_name);
                             }
-
-                            /*this.currentChannelId = channelId;
-                            this.isChannelSet = true;*/
                             this.reversedMessages = newMessages;
 
                             this.globalLastMessageCreatedAt = this.reversedMessages[this.reversedMessages.length-1].created_at;
@@ -100,7 +100,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     }
                 }
             }, 2000)
-        },
+        },*/
         methods: {
             async parseWikiText(textBeforeParsing) {
                 try {
@@ -137,6 +137,83 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                         console.error('Ошибка при получении кастомных реакций:', error);
                     });
             },
+            // Функция для получения всех стандартных эмодзи с группировкой по категориям
+            getStandardEmojis() {
+                // Диапазоны Unicode эмодзи (актуальные на 2023 год)
+                const emojiCategories = [
+                {
+                    name: "Smileys & Emotion",
+                    ranges: [
+                    { start: 0x1F600, end: 0x1F64F }, // Основные лица
+                    { start: 0x1F910, end: 0x1F92F }, // Дополнительные лица
+                    { start: 0x1F970, end: 0x1F971 }, // Влюбленные лица
+                    { start: 0x1F973, end: 0x1F976 }, // Другие эмоции
+                    ],
+                },
+                {
+                    name: "People & Body",
+                    ranges: [
+                    { start: 0x1F9B0, end: 0x1F9B9 }, // Волосы и тело
+                    { start: 0x1F9D0, end: 0x1F9DF }, // Фантастические существа
+                    ],
+                },
+                {
+                    name: "Animals & Nature",
+                    ranges: [
+                    { start: 0x1F400, end: 0x1F43F }, // Животные
+                    { start: 0x1F980, end: 0x1F98F }, // Насекомые
+                    { start: 0x1F990, end: 0x1F9BF }, // Другие природа
+                    ],
+                },
+                {
+                    name: "Food & Drink",
+                    ranges: [
+                    { start: 0x1F32D, end: 0x1F37F }, // Еда и напитки
+                    ],
+                },
+                {
+                    name: "Travel & Places",
+                    ranges: [
+                    { start: 0x1F680, end: 0x1F6FF }, // Транспорт
+                    { start: 0x1F3A0, end: 0x1F3FF }, // Места и объекты
+                    ],
+                },
+                {
+                    name: "Flags",
+                    ranges: [
+                    { start: 0x1F1E6, end: 0x1F1FF }, // Флаги стран
+                    { start: 0x1F3F4, end: 0x1F3F4 }, // Особые флаги
+                    ],
+                },
+                // ... другие категории
+                ];
+            
+                const result = [];
+            
+                emojiCategories.forEach(category => {
+                const emojis = [];
+                
+                category.ranges.forEach(({ start, end }) => {
+                    for (let code = start; code <= end; code++) {
+                    try {
+                        emojis.push({
+                        char: String.fromCodePoint(code),
+                        code: code.toString(16).toUpperCase().padStart(4, '0'),
+                        });
+                    } catch (e) {
+                        // Пропускаем невалидные символы
+                    }
+                    }
+                });
+                
+                result.push({
+                    name: category.name,
+                    emojis: emojis.filter(e => e.char.match(/\p{Emoji}/u)), // Фильтр только эмодзи
+                });
+                });
+            
+                return result;
+            },
             getChannels() {
                 api.get({
                     action: 'get_mw_messenger_channels',
@@ -166,6 +243,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     for (let i = 0; i < this.messages.length; i++) {
                         this.messages[i].parsedMessageText = await this.parseWikiText(this.messages[i].mw_messenger_message_revision_text);
                         this.messages[i].isMessageEditorOpen = false; // Ensure this property exists
+                        this.messages[i].isReactionsPickerOpen = false;
 
                         if (this.wgChatSocialAvatars) {
                             this.messages[i].user_avatar = await this.parseWikiText('{{#avatar:' + this.messages[i].user_name + '}}');
