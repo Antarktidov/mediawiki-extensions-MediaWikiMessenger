@@ -50,6 +50,52 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             this.wgChatSocialAvatars = mw.config.get('wgChatSocialAvatars');
             this.userId = mw.config.get('userId');
         },
+        mounted() {
+            setInterval(async () => {
+                if (this.currentMessagesPage === 0 &&
+                    this.globalIsMessageEditorOpen === false &&
+                    this.isChannelSet === true
+                ) {
+                    //this.getChannelMessages(this.currentChannelId);
+                    try {
+                        const data = await api.get({
+                            action: 'get_mw_messenger_channel_messages',
+                            format: 'json',
+                            channel_id: this.currentChannelId,
+                            page: 0
+                        });
+                        let newMessages = data['get_mw_messenger_channel_messages'].messages;
+                        //console.log(newMessages);
+
+                        this.reverseArray(newMessages);
+
+                        if (JSON.stringify(newMessages) !== JSON.stringify(this.messages)) {
+                            for (let i = 0; i <  newMessages.length; i++) {
+                                newMessages[i].parsedMessageText = await this.parseWikiText(newMessages[i].mw_messenger_message_revision_text);
+                                newMessages[i].isMessageEditorOpen = false; // Ensure this property exists
+
+                                if (this.wgChatSocialAvatars) {
+                                    newMessages[i].user_avatar = await this.parseWikiText('{{#avatar:' + newMessages[i].user_name + '}}');
+                                }
+
+                                //console.log(newMessages[i].user_name);
+                            }
+
+                            /*this.currentChannelId = channelId;
+                            this.isChannelSet = true;*/
+                            this.reversedMessages = newMessages;
+
+                            this.globalLastMessageCreatedAt = this.reversedMessages[this.reversedMessages.length-1].created_at;
+
+                            mw.loader.load(this.scriptPath + '/extensions/PortableInfobox/resources/PortableInfobox.js');
+                            mw.loader.load(this.scriptPath + '/extensions/SpoilerSpan/resources/ext.SpoilerSpan.js');
+                        }
+                    } catch (error) {
+                        console.error('Error when getting messages:', error);
+                    }
+                }
+            }, 2000)
+        },
         methods: {
             async parseWikiText(textBeforeParsing) {
                 try {
@@ -78,7 +124,6 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             },
             async getChannelMessages(channelId, messagesPage = 0) {
                 try {
-
                     if (this.currentChannelId !== channelId) {
                         this.currentMessagesPage = 0;
                     }
