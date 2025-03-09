@@ -260,6 +260,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                         this.messages[i].parsedMessageText = await this.parseWikiText(this.messages[i].mw_messenger_message_revision_text);
                         this.messages[i].isMessageEditorOpen = false; // Ensure this property exists
                         this.messages[i].isReactionsPickerOpen = false;
+                        this.messages[i].standardReactions = [];
 
                         if (this.wgChatSocialAvatars) {
                             this.messages[i].user_avatar = await this.parseWikiText('{{#avatar:' + this.messages[i].user_name + '}}');
@@ -306,8 +307,33 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     console.error('Error when sending message:', error);
                 });
             },
+            addStandardReactionToMsg(msgId, char) {
+                console.log(`need add standard reaction ${char} to msg with id ${msgId}`);
 
-            deletedMessage(messageId) {
+                this.reversedMessages.forEach(element => {
+                    if (element.mw_messenger_message_id === msgId) {
+                        console.log(element.parsedMessageText);
+
+                        let pushedItem = {
+                            userId: this.userId,
+                            standardReaction: char,
+                        };//информация о стандартной реакции (ID участника и сама реакция), добавляемой к сообщению
+
+                        // Проверка на уникальность объекта
+                        const isUnique = !element.standardReactions.some(reaction => 
+                            reaction.userId === pushedItem.userId && 
+                            reaction.standardReaction === pushedItem.standardReaction
+                        );
+
+                        if (isUnique) {
+                            element.standardReactions.push(pushedItem);
+                        }
+
+                        console.log('Message information after adding standard reaction', element);
+                    }
+                });
+            },
+            deleteMessage(messageId) {
                 api.post({
                     action: 'delete_message_mw_messenger',
                     format: 'json',

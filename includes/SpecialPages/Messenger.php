@@ -59,7 +59,7 @@ class Messenger extends \SpecialPage {
 													</span>
 													<span class="mw-messenger-message-header-right">
 														<a @click.prevent="openMessageEditor(message.mw_messenger_message_id)" href="#" v-if="userId === +message.mw_messenger_message_user_id">{{mwMessengerEditMessageBtnTxt}}</a>
-														<a @click.prevent="deletedMessage(message.mw_messenger_message_id)" href="#" v-if="userId === +message.mw_messenger_message_user_id || isUserCanDeleteOtherUsersMessages">{{mwMessengerDeleteMessageBtnTxt}}</a>
+														<a @click.prevent="deleteMessage(message.mw_messenger_message_id)" href="#" v-if="userId === +message.mw_messenger_message_user_id || isUserCanDeleteOtherUsersMessages">{{mwMessengerDeleteMessageBtnTxt}}</a>
 													</span>
 												</div>
 												<div class="mw-messenger-message-body" v-html="message.parsedMessageText"></div>
@@ -87,7 +87,7 @@ class Messenger extends \SpecialPage {
 															<div v-for="emoji_group in allEmojis" class="reactions-picker-standard-reactions">
 																<div class="emoji-group-title">{{emoji_group.name}}</div>
 																	<div class="emoji-super-group-emojis">
-																	<span v-for="emoji in emoji_group[\'emojis\']" class="emoji-group-emojis">{{emoji[\'char\']}}</span>
+																	<span @click="addStandardReactionToMsg(message.mw_messenger_message_id, emoji[\'char\'])" v-for="emoji in emoji_group[\'emojis\']" class="emoji-group-emojis">{{emoji[\'char\']}}</span>
 																</div>
 															</div>
 														</span>

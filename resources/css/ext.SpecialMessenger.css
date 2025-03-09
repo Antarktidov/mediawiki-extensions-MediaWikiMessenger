@@ -91,11 +91,10 @@
         height: 250px;
         display: inline-flex;
         width: 200px;
-        position: fixed;
+        position: relative;
         background-color: white;
 
         overflow-x: scroll;
-        display: flex;
         flex-direction: column;
 
         & .reactions-picker-standard-reactions {
