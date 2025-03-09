@@ -100,8 +100,53 @@ class GetChannelMessages extends ApiBase {
                     $row->mw_messenger_message_revision_message_id = $revisionRow->mw_messenger_message_revision_message_id;
                 }
 
+                // Получение кастомных реакций для сообщения
+                $customReactionsRes = $dbr->newSelectQueryBuilder()
+                ->select([
+                    'mw_messenger_custom_reaction_filename',
+                    'mw_messenger_custom_reaction_user_id'
+                ])
+                ->from('mw_messenger_custom_reaction')
+                ->where("mw_messenger_custom_reaction_message_id = $mw_messenger_message_revision_message_id")
+                ->fetchResultSet();
+
+                $customReactions = [];
+                foreach ( $customReactionsRes as $reactionRow ) {
+                    $filename = $reactionRow->mw_messenger_custom_reaction_filename;
+                    $userId = $reactionRow->mw_messenger_custom_reaction_user_id;
+                    if (!isset($customReactions[$filename])) {
+                        $customReactions[$filename] = [];
+                    }
+                    $customReactions[$filename][] = (int)$userId;
+                }
+                $row->customReactions = $customReactions;
+
+                // Получение стандартных реакций для сообщения
+                $standardReactionsRes = $dbr->newSelectQueryBuilder()
+                ->select([
+                    'mw_messenger_standard_reaction_filename',
+                    'mw_messenger_standard_reaction_user_id'
+                ])
+                ->from('mw_messenger_standard_reaction')
+                ->where("mw_messenger_standard_reaction_message_id = $mw_messenger_message_revision_message_id")
+                ->fetchResultSet();
+
+                $standardReactions = [];
+                foreach ( $standardReactionsRes as $reactionRow ) {
+                    $filename = $reactionRow->mw_messenger_standard_reaction_filename;
+                    $userId = $reactionRow->mw_messenger_standard_reaction_user_id;
+                    if (!isset($standardReactions[$filename])) {
+                        $standardReactions[$filename] = [];
+                    }
+                    $standardReactions[$filename][] = (int)$userId;
+                }
+                $row->standardReactions = $standardReactions;
+
                 array_push($messages, $row);
             }
+            /*
+             Работай с переменной $messages сдесь
+             */
 
             $this->getResult()->addValue( null, $this->getModuleName(), [
                 'messages' => $messages,

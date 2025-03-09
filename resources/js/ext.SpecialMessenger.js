@@ -260,14 +260,14 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                         this.messages[i].parsedMessageText = await this.parseWikiText(this.messages[i].mw_messenger_message_revision_text);
                         this.messages[i].isMessageEditorOpen = false; // Ensure this property exists
                         this.messages[i].isReactionsPickerOpen = false;
-                        this.messages[i].standardReactions = {
-                            '😍': [2],
-                            '❤️': [2],
+                        /*this.messages[i].standardReactions = {
+                            '😍': [1],
+                            '❤️': [1],
                         };
                         let customReactionImage = this.customReactions[0].reaction_image;
                         this.messages[i].customReactions = {
-                            [customReactionImage]: [2],
-                        };
+                            [customReactionImage]: [1],
+                        };*/
 
                         if (this.wgChatSocialAvatars) {
                             this.messages[i].user_avatar = await this.parseWikiText('{{#avatar:' + this.messages[i].user_name + '}}');
@@ -286,7 +286,8 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     mw.loader.load(this.scriptPath + '/extensions/PortableInfobox/resources/PortableInfobox.js');
                     mw.loader.load(this.scriptPath + '/extensions/SpoilerSpan/resources/ext.SpoilerSpan.js');
 
-                    console.log('custom reactions under all messages', this.messages[0].customReactions);
+                    console.log('standard reactions under message 0', this.messages[0].standardReactions);
+                    console.log('custom reactions under message 0', this.messages[0].customReactions);
                 } catch (error) {
                     console.error('Error when getting messages:', error);
                 }
