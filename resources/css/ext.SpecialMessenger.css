@@ -115,8 +115,11 @@
     & .emoji-group-emojis {
         cursor: pointer;
     }
+    
+    & .mw-messenger-message-reactions-reaction-my-reaction {
+        border: 1px solid;
+    }
 }
-
 [v-cloak] {
     display: none;
 }

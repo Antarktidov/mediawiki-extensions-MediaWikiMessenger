@@ -64,7 +64,7 @@ class Messenger extends \SpecialPage {
 												</div>
 												<div class="mw-messenger-message-body" v-html="message.parsedMessageText"></div>
 												<div class="mw-messenger-message-reactions">
-													<span v-for="(userIds, reaction) in message.standardReactions" class="mw-messenger-message-reactions-reaction">
+													<span @click.prevent="switchStandardReaction(reaction, message)" v-for="(userIds, reaction) in message.standardReactions" :class="[\'mw-messenger-message-reactions-reaction\', userIds.includes(userId) ? \'mw-messenger-message-reactions-reaction-my-reaction\' : \'\']">
 														<span class="mw-messenger-message-reactions-reaction-reaction">{{ reaction }}</span>
 														<span class="mw-messenger-message-reactions-reaction-counter">{{ userIds.length }}</span>
 													</span>

@@ -260,7 +260,10 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                         this.messages[i].parsedMessageText = await this.parseWikiText(this.messages[i].mw_messenger_message_revision_text);
                         this.messages[i].isMessageEditorOpen = false; // Ensure this property exists
                         this.messages[i].isReactionsPickerOpen = false;
-                        this.messages[i].standardReactions = {};
+                        this.messages[i].standardReactions = {
+                            '😍': [2],
+                            '❤️': [2],
+                        };
 
                         if (this.wgChatSocialAvatars) {
                             this.messages[i].user_avatar = await this.parseWikiText('{{#avatar:' + this.messages[i].user_name + '}}');
@@ -332,6 +335,30 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                         console.log('Message information after adding standard reaction', element);
                     }
                 });
+            },
+            switchStandardReaction(reaction, message) {
+                // Проверка, существует ли массив пользователей для данной реакции
+                if (!message.standardReactions[reaction]) {
+                    message.standardReactions[reaction] = [];
+                }
+
+                // Проверка, поставил ли пользователь уже эту реакцию
+                const userReactionIndex = message.standardReactions[reaction].indexOf(this.userId);
+
+                if (userReactionIndex === -1) {
+                    // Если пользователь еще не поставил эту реакцию, добавляем его ID
+                    message.standardReactions[reaction].push(this.userId);
+                } else {
+                    // Если пользователь уже поставил эту реакцию, удаляем его ID
+                    message.standardReactions[reaction].splice(userReactionIndex, 1);
+                }
+
+                // Если массив пользователей для данной реакции пуст, удаляем реакцию из объекта
+                if (message.standardReactions[reaction].length === 0) {
+                    delete message.standardReactions[reaction];
+                }
+
+                console.log('Message information after switching reaction', message);
             },
             deleteMessage(messageId) {
                 api.post({
