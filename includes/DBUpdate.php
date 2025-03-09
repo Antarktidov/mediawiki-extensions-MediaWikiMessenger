@@ -16,5 +16,8 @@ class DBUpdate implements \MediaWiki\Installer\Hook\LoadExtensionSchemaUpdatesHo
         $updater->addExtensionTable( 'mw_messenger_channel', "$dir/mw_messenger_channel.sql" );
         $updater->addExtensionTable( 'mw_messenger_message', "$dir/mw_messenger_message.sql" );
         $updater->addExtensionTable( 'mw_messenger_message_revision', "$dir/mw_messenger_message_revision.sql" );
+
+        $updater->addExtensionTable( 'mw_messenger_custom_reaction', "$dir/mw_messenger_custom_reaction.sql" );
+        $updater->addExtensionTable( 'mw_messenger_standard_reaction', "$dir/mw_messenger_standard_reaction.sql" );
     }
 }

@@ -3,7 +3,7 @@
     "author": "Antarktidov",
     "url": "https://github.com/Antarktidov/mediawiki-extensions-MediaWikiMessenger",
     "descriptionmsg": "mw-messenger-desc",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "license-name": "MIT",
     "type": "specialpage",
     "requires": {
@@ -34,7 +34,16 @@
                 "mw-messenger-cancel-edit-message-btn",
                 "mw-messenger-save-edited-message-btn",
                 "mw-messenger-load-old-messages-btn",
-                "mw-messenger-load-newish-messages-btn"
+                "mw-messenger-load-newish-messages-btn",
+
+                "sitetitle",
+
+                "mw-messenger-reactions-group-smileys-and-emotion",
+                "mw-messenger-reactions-group-people-and-body",
+                "mw-messenger-reactions-group-animals-and-nature",
+                "mw-messenger-reactions-group-food-and-drink",
+                "mw-messenger-reactions-group-travel-and-places",
+                "mw-messenger-reactions-group-flags"
             ]
         }
     },
@@ -60,6 +69,14 @@
         },
         "edit_message_mw_messenger": {
             "class": "MediaWiki\\Extension\\MediaWikiMessenger\\Api\\EditMessage",
+            "method": "post"   
+        },
+        "remove_reaction_from_message": {
+            "class": "MediaWiki\\Extension\\MediaWikiMessenger\\Api\\RemoveReactionFromMessage",
+            "method": "post"   
+        },
+        "add_reaction_to_message": {
+            "class": "MediaWiki\\Extension\\MediaWikiMessenger\\Api\\AddReactionToMessage",
             "method": "post"   
         }
 	},
