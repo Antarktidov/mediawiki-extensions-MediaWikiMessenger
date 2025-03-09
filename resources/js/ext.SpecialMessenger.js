@@ -260,7 +260,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                         this.messages[i].parsedMessageText = await this.parseWikiText(this.messages[i].mw_messenger_message_revision_text);
                         this.messages[i].isMessageEditorOpen = false; // Ensure this property exists
                         this.messages[i].isReactionsPickerOpen = false;
-                        this.messages[i].standardReactions = [];
+                        this.messages[i].standardReactions = {};
 
                         if (this.wgChatSocialAvatars) {
                             this.messages[i].user_avatar = await this.parseWikiText('{{#avatar:' + this.messages[i].user_name + '}}');
@@ -314,19 +314,19 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     if (element.mw_messenger_message_id === msgId) {
                         console.log(element.parsedMessageText);
 
-                        let pushedItem = {
-                            userId: this.userId,
-                            standardReaction: char,
-                        };//информация о стандартной реакции (ID участника и сама реакция), добавляемой к сообщению
+                        // Инициализация объекта стандартных реакций, если он не существует
+                        if (!element.standardReactions) {
+                            element.standardReactions = {};
+                        }
 
-                        // Проверка на уникальность объекта
-                        const isUnique = !element.standardReactions.some(reaction => 
-                            reaction.userId === pushedItem.userId && 
-                            reaction.standardReaction === pushedItem.standardReaction
-                        );
+                        // Инициализация массива пользователей для данной реакции, если он не существует
+                        if (!element.standardReactions[char]) {
+                            element.standardReactions[char] = [];
+                        }
 
-                        if (isUnique) {
-                            element.standardReactions.push(pushedItem);
+                        // Проверка на уникальность идентификатора пользователя в массиве
+                        if (!element.standardReactions[char].includes(this.userId)) {
+                            element.standardReactions[char].push(this.userId);
                         }
 
                         console.log('Message information after adding standard reaction', element);

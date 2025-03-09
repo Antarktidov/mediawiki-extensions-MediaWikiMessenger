@@ -64,35 +64,31 @@ class Messenger extends \SpecialPage {
 												</div>
 												<div class="mw-messenger-message-body" v-html="message.parsedMessageText"></div>
 												<div class="mw-messenger-message-reactions">
-													<span class="mw-messenger-message-reactions-reaction">
-														<span class="mw-messenger-message-reactions-reaction-reaction">😀</span>
-														<span class="mw-messenger-message-reactions-reaction-counter">1</span>
-													</span>
-													<span class="mw-messenger-message-reactions-reaction">
-														<span class="mw-messenger-message-reactions-reaction-reaction"><img src="http://localhost/mediawiki-1.43.0/index.php/Служебная:FilePath/M.png"></span>
-														<span class="mw-messenger-message-reactions-reaction-counter">1</span>
+													<span v-for="(userIds, reaction) in message.standardReactions" class="mw-messenger-message-reactions-reaction">
+														<span class="mw-messenger-message-reactions-reaction-reaction">{{ reaction }}</span>
+														<span class="mw-messenger-message-reactions-reaction-counter">{{ userIds.length }}</span>
 													</span>
 													<span class="reactions-plus-wrapper">
-													<span @mouseleave="message.isReactionsPickerOpen = false" class="mw-messenger-message-reactions-reaction-super-plus-wrapper">
-														<span @click.prevent="message.isReactionsPickerOpen = true" class="mw-messenger-message-reactions-reaction-super-plus">
-															<span class="mw-messenger-message-reactions-reaction-plus">+</span>
-														</span>
-														<span v-show="message.isReactionsPickerOpen" class="reaction-picker">
-															{{sitetitle}}
-															<span class="reactions-picker-custom-reactions">
-																<span v-for="customReaction in customReactions" class="reactions-picker-custom-reaction">
-																	<img class="custom-reaction-img" :src="scriptPath + \'/index.php/Special:FilePath/\' + customReaction.reaction_image">
-																</span>
+														<span @mouseleave="message.isReactionsPickerOpen = false" class="mw-messenger-message-reactions-reaction-super-plus-wrapper">
+															<span @click.prevent="message.isReactionsPickerOpen = true" class="mw-messenger-message-reactions-reaction-super-plus">
+																<span class="mw-messenger-message-reactions-reaction-plus">+</span>
 															</span>
-															<div v-for="emoji_group in allEmojis" class="reactions-picker-standard-reactions">
-																<div class="emoji-group-title">{{emoji_group.name}}</div>
+															<span v-show="message.isReactionsPickerOpen" class="reaction-picker">
+																{{ sitetitle }}
+																<span class="reactions-picker-custom-reactions">
+																	<span v-for="customReaction in customReactions" class="reactions-picker-custom-reaction">
+																		<img class="custom-reaction-img" :src="scriptPath + \'/index.php/Special:FilePath/\' + customReaction.reaction_image">
+																	</span>
+																</span>
+																<div v-for="emoji_group in allEmojis" class="reactions-picker-standard-reactions">
+																	<div class="emoji-group-title">{{ emoji_group.name }}</div>
 																	<div class="emoji-super-group-emojis">
-																	<span @click="addStandardReactionToMsg(message.mw_messenger_message_id, emoji[\'char\'])" v-for="emoji in emoji_group[\'emojis\']" class="emoji-group-emojis">{{emoji[\'char\']}}</span>
+																		<span @click="addStandardReactionToMsg(message.mw_messenger_message_id, emoji[\'char\'])" v-for="emoji in emoji_group[\'emojis\']" class="emoji-group-emojis">{{ emoji[\'char\'] }}</span>
+																	</div>
 																</div>
-															</div>
+															</span>
 														</span>
-														</span>
-														</span>
+													</span>
 												</div>
 											</div>
 										</div>
