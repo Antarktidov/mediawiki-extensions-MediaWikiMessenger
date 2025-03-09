@@ -16,6 +16,8 @@ class AddReactionToMessage extends ApiBase {
     }
 
     public function execute() {
+        $this->validateCustomReactions('Kekw.png');
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $user = $this->getUser();
 
@@ -32,9 +34,8 @@ class AddReactionToMessage extends ApiBase {
             try {
                 $dbw = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection(DB_PRIMARY);
 
-                if ($this->validateUnicodeEmoji($reaction)) {
-
                     if ($reaction_type === 'standard') {
+                        if ($this->validateUnicodeEmoji($reaction)) {
                         // Проверка, что такой реакции с типом standard не существует
                         $res = $dbw->newSelectQueryBuilder()
                             ->select(['mw_messenger_standard_reaction_id'])
@@ -62,29 +63,31 @@ class AddReactionToMessage extends ApiBase {
                                             
                     }
                 } else if ($reaction_type === 'custom') {
-                    // Проверка, что такой реакции с типом custom не существует
-                    $res = $dbw->newSelectQueryBuilder()
-                        ->select(['mw_messenger_custom_reaction_id'])
-                        ->from('mw_messenger_custom_reaction')
-                        ->where([
-                            'mw_messenger_custom_reaction_user_id' => $user_id,
-                            'mw_messenger_custom_reaction_message_id' => $message_id,
-                            'mw_messenger_custom_reaction_filename' => $reaction
-                        ])
-                        ->caller(__METHOD__)
-                        ->fetchField();
-
-                    if (!$res) {
-                        // Добавление реакции в базу данных mw_messenger_custom_reaction
-                        $dbw->newInsertQueryBuilder()
-                            ->insert('mw_messenger_custom_reaction')
-                            ->row([
+                    if ($this->validateCustomReactions($reaction)) {
+                        // Проверка, что такой реакции с типом custom не существует
+                        $res = $dbw->newSelectQueryBuilder()
+                            ->select(['mw_messenger_custom_reaction_id'])
+                            ->from('mw_messenger_custom_reaction')
+                            ->where([
                                 'mw_messenger_custom_reaction_user_id' => $user_id,
                                 'mw_messenger_custom_reaction_message_id' => $message_id,
                                 'mw_messenger_custom_reaction_filename' => $reaction
                             ])
                             ->caller(__METHOD__)
-                            ->execute();
+                            ->fetchField();
+
+                        if (!$res) {
+                            // Добавление реакции в базу данных mw_messenger_custom_reaction
+                            $dbw->newInsertQueryBuilder()
+                                ->insert('mw_messenger_custom_reaction')
+                                ->row([
+                                    'mw_messenger_custom_reaction_user_id' => $user_id,
+                                    'mw_messenger_custom_reaction_message_id' => $message_id,
+                                    'mw_messenger_custom_reaction_filename' => $reaction
+                                ])
+                                ->caller(__METHOD__)
+                                ->execute();
+                        }
                     }
                 }
             } catch ( DBQueryError $e ) {
@@ -138,6 +141,33 @@ class AddReactionToMessage extends ApiBase {
             }
         }
         
+        return false;
+    }
+
+    private function validateCustomReactions($reaction) {
+        global $wgServer;
+        global $wgScriptPath;
+        $MediaWikiMessengerReactionsPageText = file_get_contents($wgServer . $wgScriptPath . '/index.php/MediaWiki:MessengerReactions?action=raw');
+        //echo $MediaWikiMessengerReactionsPageText;
+
+        $reactionsLines = explode("\n", $MediaWikiMessengerReactionsPageText);
+        $customReactions = [];
+
+        foreach ($reactionsLines as $line) {
+            list($reaction_name, $reaction_image) = explode(' ', $line);
+            $customReactions[] = [
+                'reaction_name' => $reaction_name,
+                'reaction_image' => $reaction_image,
+            ];
+        }
+
+        //print_r( $customReactions );
+
+        foreach ($customReactions as $customReaction) {
+            if ($customReaction['reaction_image'] === $reaction) {
+            return true;
+            }
+        }
         return false;
     }
 
