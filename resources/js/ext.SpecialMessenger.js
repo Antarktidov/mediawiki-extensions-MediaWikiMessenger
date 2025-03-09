@@ -268,6 +268,15 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                         this.messages[i].customReactions = {
                             [customReactionImage]: [1],
                         };*/
+                        //console.log(`this.messages[${i}].customReactions.isArray() = ${this.messages[i].customReactions.isArray()}`);
+                        //console.log(`this.messages[${i}].standardReactions.isArray() = ${this.messages[i].standardReactions.isArray()}`);
+                        if  (Array.isArray(this.messages[i].standardReactions)) {
+                            this.messages[i].standardReactions = {};
+                        }
+
+                        if  (Array.isArray(this.messages[i].customReactions)) {
+                            this.messages[i].customReactions = {};
+                        }
 
                         if (this.wgChatSocialAvatars) {
                             this.messages[i].user_avatar = await this.parseWikiText('{{#avatar:' + this.messages[i].user_name + '}}');
