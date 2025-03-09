@@ -346,6 +346,18 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                             element.standardReactions[char].push(this.userId);
                         }
 
+                        api.post({
+                            action: 'add_reaction_to_message',
+                            format: 'json',
+                            message_id: element.mw_messenger_message_id,
+                            reaction: char,
+                            reaction_type: 'standard',
+                        }).done((data) => {
+                            console.log(data);
+                        }).fail((error) => {
+                            console.error('Error when adding custom reaction:', error);
+                        });
+
                         console.log('Message information after adding standard reaction', element);
                     }
                 });
@@ -371,6 +383,18 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                             element.customReactions[reaction].push(this.userId);
                         }
 
+                        api.post({
+                            action: 'add_reaction_to_message',
+                            format: 'json',
+                            message_id: element.mw_messenger_message_id,
+                            reaction: reaction,
+                            reaction_type: 'custom',
+                        }).done((data) => {
+                            console.log(data);
+                        }).fail((error) => {
+                            console.error('Error when adding custom reaction:', error);
+                        });
+
                         console.log('Message information after adding custom reaction', element);
                     }
                 });
@@ -388,6 +412,17 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 if (userReactionIndex === -1) {
                     // Если пользователь еще не поставил эту реакцию, добавляем его ID
                     message.standardReactions[reaction].push(this.userId);
+                    api.post({
+                        action: 'add_reaction_to_message',
+                        format: 'json',
+                        message_id: message.mw_messenger_message_id,
+                        reaction: reaction,
+                        reaction_type: 'standard',
+                    }).done((data) => {
+                        console.log(data);
+                    }).fail((error) => {
+                        console.error('Error when adding standard reaction:', error);
+                    });
                 } else {
                     // Если пользователь уже поставил эту реакцию, удаляем его ID
                     message.standardReactions[reaction].splice(userReactionIndex, 1);
@@ -426,14 +461,20 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 if (userReactionIndex === -1) {
                     // Если пользователь еще не поставил эту реакцию, добавляем его ID
                     message.customReactions[reactionKey].push(this.userId);
+                    api.post({
+                        action: 'add_reaction_to_message',
+                        format: 'json',
+                        message_id: message.mw_messenger_message_id,
+                        reaction: reactionKey,
+                        reaction_type: 'custom',
+                    }).done((data) => {
+                        console.log(data);
+                    }).fail((error) => {
+                        console.error('Error when adding custom reaction:', error);
+                    });
                 } else {
                     // Если пользователь уже поставил эту реакцию, удаляем его ID
                     message.customReactions[reactionKey].splice(userReactionIndex, 1);
-                }
-
-                // Если массив пользователей для данной реакции пуст, удаляем реакцию из объекта
-                if (message.customReactions[reactionKey].length === 0) {
-                    delete message.customReactions[reactionKey];
 
                     console.log('reactionKey из удаления кастомной реации:', reactionKey);
 
@@ -448,6 +489,11 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     }).fail((error) => {
                         console.error('Error when deleting custom reaction:', error);
                     });
+                }
+
+                // Если массив пользователей для данной реакции пуст, удаляем реакцию из объекта
+                if (message.customReactions[reactionKey].length === 0) {
+                    delete message.customReactions[reactionKey];
                 }
 
                 console.log('Message information after switching reaction', message);

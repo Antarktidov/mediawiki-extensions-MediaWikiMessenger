@@ -74,6 +74,10 @@
         "remove_reaction_from_message": {
             "class": "MediaWiki\\Extension\\MediaWikiMessenger\\Api\\RemoveReactionFromMessage",
             "method": "post"   
+        },
+        "add_reaction_to_message": {
+            "class": "MediaWiki\\Extension\\MediaWikiMessenger\\Api\\AddReactionToMessage",
+            "method": "post"   
         }
 	},
     "AddGroups": {
