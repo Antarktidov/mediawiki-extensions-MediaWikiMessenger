@@ -268,8 +268,6 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                         this.messages[i].customReactions = {
                             [customReactionImage]: [1],
                         };*/
-                        //console.log(`this.messages[${i}].customReactions.isArray() = ${this.messages[i].customReactions.isArray()}`);
-                        //console.log(`this.messages[${i}].standardReactions.isArray() = ${this.messages[i].standardReactions.isArray()}`);
                         if  (Array.isArray(this.messages[i].standardReactions)) {
                             this.messages[i].standardReactions = {};
                         }
@@ -393,11 +391,24 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 } else {
                     // Если пользователь уже поставил эту реакцию, удаляем его ID
                     message.standardReactions[reaction].splice(userReactionIndex, 1);
+
+                    api.post({
+                        action: 'remove_reaction_from_message',
+                        format: 'json',
+                        message_id: message.mw_messenger_message_id,
+                        reaction: reaction,
+                        reaction_type: 'standard',
+                    }).done((data) => {
+                        console.log(data);
+                    }).fail((error) => {
+                        console.error('Error when deleting standard reaction:', error);
+                    });
                 }
 
                 // Если массив пользователей для данной реакции пуст, удаляем реакцию из объекта
                 if (message.standardReactions[reaction].length === 0) {
                     delete message.standardReactions[reaction];
+
                 }
 
                 console.log('Message information after switching reaction', message);
@@ -423,6 +434,20 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 // Если массив пользователей для данной реакции пуст, удаляем реакцию из объекта
                 if (message.customReactions[reactionKey].length === 0) {
                     delete message.customReactions[reactionKey];
+
+                    console.log('reactionKey из удаления кастомной реации:', reactionKey);
+
+                    api.post({
+                        action: 'remove_reaction_from_message',
+                        format: 'json',
+                        message_id: message.mw_messenger_message_id,
+                        reaction: reactionKey,
+                        reaction_type: 'custom',
+                    }).done((data) => {
+                        console.log(data);
+                    }).fail((error) => {
+                        console.error('Error when deleting custom reaction:', error);
+                    });
                 }
 
                 console.log('Message information after switching reaction', message);

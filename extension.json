@@ -70,6 +70,10 @@
         "edit_message_mw_messenger": {
             "class": "MediaWiki\\Extension\\MediaWikiMessenger\\Api\\EditMessage",
             "method": "post"   
+        },
+        "remove_reaction_from_message": {
+            "class": "MediaWiki\\Extension\\MediaWikiMessenger\\Api\\RemoveReactionFromMessage",
+            "method": "post"   
         }
 	},
     "AddGroups": {
