@@ -72,7 +72,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             this.getCustomReactions();
             this.allEmojis = this.getStandardEmojis();
 
-            console.log(this.allEmojis);
+            console.log('customReactions', this.customReactions);
         },
         /*mounted() {
             setInterval(async () => {
@@ -144,8 +144,8 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                         reactionsLines.forEach(line => {
                             const [reaction_name, reaction_image] = line.split(' ');
                             this.customReactions.push({
-                                reaction_name,
-                                reaction_image
+                                reaction_name: reaction_name,
+                                reaction_image: reaction_image,
                             });
                         });
                     })
@@ -264,12 +264,16 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                             '😍': [2],
                             '❤️': [2],
                         };
+                        let customReactionImage = this.customReactions[0].reaction_image;
+                        this.messages[i].customReactions = {
+                            [customReactionImage]: [2],
+                        };
 
                         if (this.wgChatSocialAvatars) {
                             this.messages[i].user_avatar = await this.parseWikiText('{{#avatar:' + this.messages[i].user_name + '}}');
                         }
 
-                        console.log(this.messages[i].user_name);
+                        //console.log(this.messages[i].user_name);
                     }
 
                     this.reversedMessages = this.reverseArray(this.messages);
@@ -281,6 +285,8 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
 
                     mw.loader.load(this.scriptPath + '/extensions/PortableInfobox/resources/PortableInfobox.js');
                     mw.loader.load(this.scriptPath + '/extensions/SpoilerSpan/resources/ext.SpoilerSpan.js');
+
+                    console.log('custom reactions under all messages', this.messages[0].customReactions);
                 } catch (error) {
                     console.error('Error when getting messages:', error);
                 }
@@ -336,7 +342,33 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     }
                 });
             },
+            addCustomReactionToMsg(msgId, reaction) {
+                console.log(`need add custom reaction ${reaction} to msg with id ${msgId}`);
+                this.reversedMessages.forEach(element => {
+                    if (element.mw_messenger_message_id === msgId) {
+                        console.log(element.parsedMessageText);
+
+                        // Инициализация объекта кастомных реакций, если он не существует
+                        if (!element.customReactions) {
+                            element.customReactions = {};
+                        }
+
+                        // Инициализация массива пользователей для данной реакции, если он не существует
+                        if (!element.customReactions[reaction]) {
+                            element.customReactions[reaction] = [];
+                        }
+
+                        // Проверка на уникальность идентификатора пользователя в массиве
+                        if (!element.customReactions[reaction].includes(this.userId)) {
+                            element.customReactions[reaction].push(this.userId);
+                        }
+
+                        console.log('Message information after adding custom reaction', element);
+                    }
+                });
+            },
             switchStandardReaction(reaction, message) {
+                console.log(`need to swith rections. reaction: ${reaction}, message: ${message}`);
                 // Проверка, существует ли массив пользователей для данной реакции
                 if (!message.standardReactions[reaction]) {
                     message.standardReactions[reaction] = [];
@@ -356,6 +388,31 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 // Если массив пользователей для данной реакции пуст, удаляем реакцию из объекта
                 if (message.standardReactions[reaction].length === 0) {
                     delete message.standardReactions[reaction];
+                }
+
+                console.log('Message information after switching reaction', message);
+            },
+            switchCustomReaction(reactionKey, message) {
+                console.log(`need to swith rections. reactionKey: ${reactionKey}, message: ${message}`);
+                // Проверка, существует ли массив пользователей для данной реакции
+                if (!message.customReactions[reactionKey]) {
+                    message.customReactions[reactionKey] = [];
+                }
+
+                // Проверка, поставил ли пользователь уже эту реакцию
+                const userReactionIndex = message.customReactions[reactionKey].indexOf(this.userId);
+
+                if (userReactionIndex === -1) {
+                    // Если пользователь еще не поставил эту реакцию, добавляем его ID
+                    message.customReactions[reactionKey].push(this.userId);
+                } else {
+                    // Если пользователь уже поставил эту реакцию, удаляем его ID
+                    message.customReactions[reactionKey].splice(userReactionIndex, 1);
+                }
+
+                // Если массив пользователей для данной реакции пуст, удаляем реакцию из объекта
+                if (message.customReactions[reactionKey].length === 0) {
+                    delete message.customReactions[reactionKey];
                 }
 
                 console.log('Message information after switching reaction', message);
