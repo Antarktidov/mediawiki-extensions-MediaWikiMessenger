@@ -29,10 +29,12 @@ class Messenger extends \SpecialPage {
 		$isUserCanDeleteOtherUsersMessages = $user->isAllowed( 'delete_messages' );
 
 		$userId = $user->getId();
+        $username = $user->getName();
 
 		$out->addJsConfigVars([
 			'isUserCanDeleteOtherUsersMessages' => $isUserCanDeleteOtherUsersMessages,
 			'userId' => $userId,
+            'userName' => $username,
 			'wgChatSocialAvatars' => class_exists( 'SocialProfileHooks' ),
 		]);
 

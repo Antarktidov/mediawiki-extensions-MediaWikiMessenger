@@ -3,7 +3,7 @@
     "author": "Antarktidov",
     "url": "https://github.com/Antarktidov/mediawiki-extensions-MediaWikiMessenger",
     "descriptionmsg": "mw-messenger-desc",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "license-name": "MIT",
     "type": "specialpage",
     "requires": {
@@ -168,5 +168,6 @@
     "ExtensionMessagesFiles": {
 		"MediaWikiMessengerAlias": "MediaWikiMessenger.alias.php"
 	},
+    "load_composer_autoloader": true,
     "manifest_version": 2
 }

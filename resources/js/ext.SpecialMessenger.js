@@ -1,8 +1,56 @@
 mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
     const Vue = require( 'vue' );
-    //Vue.config.devtools = true; // Включение режима разработки
-    console.log(Vue.config);
     const api = new mw.Api();
+    let socket;
+
+    /*function connectWebSocket() {
+        socket = new WebSocket('ws://localhost:8080');
+
+        socket.onopen = function() {
+            console.log('WebSocket connection established');
+        };
+
+        socket.onmessage = function(event) {
+            const message = JSON.parse(event.data);
+            console.log(message);
+
+            if (message.type === 'newMessage') {
+                console.log('Вам поступило новое сообщение по сокетам!');
+                let messageText = message.message_text;
+                let channelId = message.channel_id;
+
+                console.log('channelId: ', channelId);
+                console.log('app.currentChannelId: ', app.currentChannelId);
+
+                if (channelId === app.currentChannelId) {
+                    console.log('id-ники каналов совпали');
+                    let messageToPushToMessagesArr = {
+                        customReactions: {},
+                        isMessageEditorOpen: {},
+                        isReactionsPickerOpen: {},
+                        mw_messenger_message_channel_id: channelId,
+                        mw_messenger_message_revision_text: messageText,
+                        mw_messenger_message_user_id: message.user_id,
+                    };
+                    app.messages.push(messageToPushToMessagesArr);
+
+                    console.log(app.messages);
+                }
+            }
+        };
+
+        socket.onclose = function() {
+            console.log('WebSocket connection closed, attempting to reconnect');
+            setTimeout(connectWebSocket, 1000);
+        };
+
+        socket.onerror = function(error) {
+            console.error('WebSocket error:', error);
+            socket.close();
+        };
+    }
+
+    connectWebSocket();*/
 
     const app = Vue.createApp({
         data() {
@@ -28,6 +76,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 isUserCanDeleteOtherUsersMessages: false,
                 isChannelSet: false,
                 userId: 0,
+                userName: '',
                 globalIsMessageEditorOpen: false,
                 currentMessagesPage: 0,
                 globalLastMessageCreatedAt: '',
@@ -68,56 +117,79 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             this.isUserCanDeleteOtherUsersMessages = mw.config.get('isUserCanDeleteOtherUsersMessages');
             this.wgChatSocialAvatars = mw.config.get('wgChatSocialAvatars');
             this.userId = mw.config.get('userId');
+            this.userName = mw.config.get('userName');
 
             this.getCustomReactions();
             this.allEmojis = this.getStandardEmojis();
 
             console.log('customReactions', this.customReactions);
+
+            this.connectWebSocket();
         },
-        /*mounted() {
-            setInterval(async () => {
-                if (this.currentMessagesPage === 0 &&
-                    this.globalIsMessageEditorOpen === false &&
-                    this.isChannelSet === true
-                ) {
-                    //this.getChannelMessages(this.currentChannelId);
-                    try {
-                        const data = await api.get({
-                            action: 'get_mw_messenger_channel_messages',
-                            format: 'json',
-                            channel_id: this.currentChannelId,
-                            page: 0
-                        });
-                        let newMessages = data['get_mw_messenger_channel_messages'].messages;
-                        //console.log(newMessages);
-
-                        this.reverseArray(newMessages);
-
-                        if (JSON.stringify(newMessages) !== JSON.stringify(this.messages)) {
-                            for (let i = 0; i <  newMessages.length; i++) {
-                                newMessages[i].parsedMessageText = await this.parseWikiText(newMessages[i].mw_messenger_message_revision_text);
-                                newMessages[i].isMessageEditorOpen = false; // Ensure this property exists
-
-                                if (this.wgChatSocialAvatars) {
-                                    newMessages[i].user_avatar = await this.parseWikiText('{{#avatar:' + newMessages[i].user_name + '}}');
-                                }
-
-                                //console.log(newMessages[i].user_name);
-                            }
-                            this.reversedMessages = newMessages;
-
-                            this.globalLastMessageCreatedAt = this.reversedMessages[this.reversedMessages.length-1].created_at;
-
-                            mw.loader.load(this.scriptPath + '/extensions/PortableInfobox/resources/PortableInfobox.js');
-                            mw.loader.load(this.scriptPath + '/extensions/SpoilerSpan/resources/ext.SpoilerSpan.js');
-                        }
-                    } catch (error) {
-                        console.error('Error when getting messages:', error);
-                    }
-                }
-            }, 2000)
-        },*/
+        
         methods: {
+            connectWebSocket() {
+                socket = new WebSocket('ws://localhost:8080');
+                const self = this; // Сохраняем контекст this
+        
+                socket.onopen = function() {
+                    console.log('WebSocket connection established');
+                };
+        
+                socket.onmessage = async function(event) {
+                    const message = JSON.parse(event.data);
+                    console.log(message);
+        
+                    if (message.type === 'newMessage') {
+                        console.log('Вам поступило новое сообщение по сокетам!');
+                        let messageText = message.message_text;
+                        let channelId = message.channel_id;
+        
+                        console.log('channelId: ', channelId);
+                        console.log('self.currentChannelId: ', self.currentChannelId); // Используем self вместо this
+        
+                        if (channelId === self.currentChannelId) {
+                            console.log('id-шники каналов совпали');
+                            let messageToPushToMessagesArr = {
+                                customReactions: {},
+                                isMessageEditorOpen: false,
+                                isReactionsPickerOpen: false,
+                                mw_messenger_message_channel_id: channelId,
+                                mw_messenger_message_revision_text: messageText,
+
+                                mw_messenger_message_user_id: message.user_id,
+                                user_name: message.user_name,
+                            };
+                            messageToPushToMessagesArr.parsedMessageText = await self.parseWikiText(messageToPushToMessagesArr.mw_messenger_message_revision_text);
+                            
+                            if (self.wgChatSocialAvatars) {
+                                messageToPushToMessagesArr.user_avatar = await self.parseWikiText('{{#avatar:' + messageToPushToMessagesArr.user_name + '}}');
+                            }
+                            
+                            self.messages.push(messageToPushToMessagesArr);
+        
+                            console.log(self.messages);
+                        }
+                    }
+                };
+        
+                socket.onclose = function() {
+                    console.log('WebSocket connection closed, attempting to reconnect');
+                    setTimeout(self.connectWebSocket, 1000); // Используем self вместо this
+                };
+        
+                socket.onerror = function(error) {
+                    console.error('WebSocket error:', error);
+                    socket.close();
+                };
+            },
+            sendMessage(msg) {
+                if (socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify(msg));
+                } else {
+                    console.error('WebSocket is not open. ReadyState: ' + socket.readyState);
+                }
+            },
             async parseWikiText(textBeforeParsing) {
                 try {
                     const data = await api.post({
@@ -302,7 +374,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             reverseArray(arr) {
                 return arr.reverse();
             },
-            sendMyMessage() {
+            async sendMyMessage() {
                 console.log('msg send btn pressed');
 
                 this.myMessage.text = this.myMessage.text.trim();
@@ -323,6 +395,32 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 }).fail((error) => {
                     console.error('Error when sending message:', error);
                 });
+
+                this.sendMessage({
+                    type: 'newMessage',
+                    message_text: this.myMessage.text,
+                    channel_id: this.currentChannelId,
+                    mw_messenger_message_user_id: this.userId,
+                    user_name: this.userName,
+                });
+
+                let messageToPushToMessagesArr = {
+                    customReactions: {},
+                    isMessageEditorOpen: false,
+                    isReactionsPickerOpen: false,
+                    mw_messenger_message_channel_id: this.currentChannelId,
+                    mw_messenger_message_revision_text: this.myMessage.text,
+
+                    mw_messenger_message_user_id: this.userId,
+                    user_name: this.userName,
+                };
+                messageToPushToMessagesArr.parsedMessageText = await this.parseWikiText(messageToPushToMessagesArr.mw_messenger_message_revision_text);
+                
+                if (self.wgChatSocialAvatars) {
+                    messageToPushToMessagesArr.user_avatar = await this.parseWikiText('{{#avatar:' + messageToPushToMessagesArr.user_name + '}}');
+                }
+                
+                this.messages.push(messageToPushToMessagesArr);
             },
             addStandardReactionToMsg(msgId, char) {
                 console.log(`need add standard reaction ${char} to msg with id ${msgId}`);
