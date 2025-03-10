@@ -149,7 +149,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                         console.log('self.currentChannelId: ', self.currentChannelId); // Используем self вместо this
         
                         if (channelId === self.currentChannelId) {
-                            console.log('id-ники каналов совпали');
+                            console.log('id-шники каналов совпали');
                             let messageToPushToMessagesArr = {
                                 customReactions: {},
                                 isMessageEditorOpen: false,
@@ -374,7 +374,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             reverseArray(arr) {
                 return arr.reverse();
             },
-            sendMyMessage() {
+            async sendMyMessage() {
                 console.log('msg send btn pressed');
 
                 this.myMessage.text = this.myMessage.text.trim();
@@ -403,6 +403,24 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     mw_messenger_message_user_id: this.userId,
                     user_name: this.userName,
                 });
+
+                let messageToPushToMessagesArr = {
+                    customReactions: {},
+                    isMessageEditorOpen: false,
+                    isReactionsPickerOpen: false,
+                    mw_messenger_message_channel_id: this.currentChannelId,
+                    mw_messenger_message_revision_text: this.myMessage.text,
+
+                    mw_messenger_message_user_id: this.userId,
+                    user_name: this.userName,
+                };
+                messageToPushToMessagesArr.parsedMessageText = await this.parseWikiText(messageToPushToMessagesArr.mw_messenger_message_revision_text);
+                
+                if (self.wgChatSocialAvatars) {
+                    messageToPushToMessagesArr.user_avatar = await this.parseWikiText('{{#avatar:' + messageToPushToMessagesArr.user_name + '}}');
+                }
+                
+                this.messages.push(messageToPushToMessagesArr);
             },
             addStandardReactionToMsg(msgId, char) {
                 console.log(`need add standard reaction ${char} to msg with id ${msgId}`);
