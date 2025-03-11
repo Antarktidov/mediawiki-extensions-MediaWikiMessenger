@@ -66,6 +66,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 mwMessengerCancelEditMessageBtnTxt: '',
                 mwMessengerSaveEditedMessageBtnTxt: '',
                 mwMessengerLoadOldMessagesBtnTxt: '',
+                mwMessengerHistoryMessageBtnTxt: '',
                 mwMessengerLoadNewishMessagesBtnTxt: '',
                 myMessage: {
                     text: ''
@@ -104,6 +105,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             this.mwMessengerDeleteMessageBtnTxt = mw.msg('mw-messenger-delete-message-btn');
             this.mwMessengerLoadOldMessagesBtnTxt = mw.msg('mw-messenger-load-old-messages-btn');
             this.mwMessengerLoadNewishMessagesBtnTxt = mw.msg('mw-messenger-load-newish-messages-btn');
+            this.mwMessengerHistoryMessageBtnTxt = mw.msg('mw-messenger-history-message-btn')
 
             this.mwMessengerReactionsGroupSmileysAndEmotion = mw.msg('mw-messenger-reactions-group-smileys-and-emotion');
             this.mwMessengerReactionsGroupPeopleAndBody = mw.msg('mw-messenger-reactions-group-people-and-body');

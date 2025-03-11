@@ -60,6 +60,7 @@ class Messenger extends \SpecialPage {
                                             <a v-bind:href="scriptPath + \'/index.php/User:\' + message.user_name">{{message.user_name}}</a>
                                         </span>
                                         <span class="mw-messenger-message-header-right">
+                                            <a v-bind:href="scriptPath + \'/index.php/Special:MessengerMessageHistory?message_id=\' + message.mw_messenger_message_id">{{mwMessengerHistoryMessageBtnTxt}}</a>
                                             <a @click.prevent="openMessageEditor(message.mw_messenger_message_id)" href="#" v-if="userId === +message.mw_messenger_message_user_id">{{mwMessengerEditMessageBtnTxt}}</a>
                                             <a @click.prevent="deleteMessage(message.mw_messenger_message_id)" href="#" v-if="userId === +message.mw_messenger_message_user_id || isUserCanDeleteOtherUsersMessages">{{mwMessengerDeleteMessageBtnTxt}}</a>
                                         </span>
