@@ -75,6 +75,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     text: ''
                 },
                 isUserCanDeleteOtherUsersMessages: false,
+                isUserAllowedToViewMessagesHistory: false,
                 isChannelSet: false,
                 userId: 0,
                 userName: '',
@@ -117,6 +118,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             this.sitetitle = mw.msg('sitetitle');
 
             this.isUserCanDeleteOtherUsersMessages = mw.config.get('isUserCanDeleteOtherUsersMessages');
+            this.isUserAllowedToViewMessagesHistory = mw.config.get('isUserAllowedToViewMessagesHistory');
             this.wgChatSocialAvatars = mw.config.get('wgChatSocialAvatars');
             this.userId = mw.config.get('userId');
             this.userName = mw.config.get('userName');
