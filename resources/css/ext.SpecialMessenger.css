@@ -1,12 +1,9 @@
 #mw-messenger {
     display: flex;
     gap: 30px;
-    
-    & #mw-messenger-channels-list {
-        width: 100px;
-    }
+}
 
-    & .mw-messenger-message {
+     .mw-messenger-message {
         margin-bottom: 20px;
 
         & .mw-messenger-message-header {
@@ -119,7 +116,6 @@
     & .mw-messenger-message-reactions-reaction-my-reaction {
         border: 1px solid;
     }
-}
 [v-cloak] {
     display: none;
 }

@@ -15,7 +15,8 @@
     "SpecialPages": {
 		"Messenger": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\Messenger",
 		"CreateMessengerChannel": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\CreateMessengerChannel",
-        "DeleteMessengerChannel": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\DeleteMessengerChannel"
+        "DeleteMessengerChannel": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\DeleteMessengerChannel",
+        "MessengerMessageHistory": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\MessengerMessageHistory"
 	},
     "ResourceModules": {
         "ext.MediaWikiMessenger": {
@@ -44,6 +45,11 @@
                 "mw-messenger-reactions-group-food-and-drink",
                 "mw-messenger-reactions-group-travel-and-places",
                 "mw-messenger-reactions-group-flags"
+            ]
+        },
+        "ext.MessengerMessageHistory": {
+            "styles": [
+                "extensions/MediaWikiMessenger/resources/css/ext.SpecialMessenger.css"
             ]
         }
     },
