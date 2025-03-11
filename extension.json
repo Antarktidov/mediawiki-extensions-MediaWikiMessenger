@@ -3,7 +3,7 @@
     "author": "Antarktidov",
     "url": "https://github.com/Antarktidov/mediawiki-extensions-MediaWikiMessenger",
     "descriptionmsg": "mw-messenger-desc",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "license-name": "MIT",
     "type": "specialpage",
     "requires": {
@@ -15,7 +15,8 @@
     "SpecialPages": {
 		"Messenger": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\Messenger",
 		"CreateMessengerChannel": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\CreateMessengerChannel",
-        "DeleteMessengerChannel": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\DeleteMessengerChannel"
+        "DeleteMessengerChannel": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\DeleteMessengerChannel",
+        "MessengerMessageHistory": "MediaWiki\\Extension\\MediaWikiMessenger\\SpecialPages\\MessengerMessageHistory"
 	},
     "ResourceModules": {
         "ext.MediaWikiMessenger": {
@@ -35,6 +36,7 @@
                 "mw-messenger-save-edited-message-btn",
                 "mw-messenger-load-old-messages-btn",
                 "mw-messenger-load-newish-messages-btn",
+                "mw-messenger-history-message-btn",
 
                 "sitetitle",
 
@@ -44,6 +46,11 @@
                 "mw-messenger-reactions-group-food-and-drink",
                 "mw-messenger-reactions-group-travel-and-places",
                 "mw-messenger-reactions-group-flags"
+            ]
+        },
+        "ext.MessengerMessageHistory": {
+            "styles": [
+                "extensions/MediaWikiMessenger/resources/css/ext.SpecialMessenger.css"
             ]
         }
     },

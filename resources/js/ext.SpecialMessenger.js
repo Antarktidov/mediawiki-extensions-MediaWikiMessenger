@@ -66,6 +66,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                 mwMessengerCancelEditMessageBtnTxt: '',
                 mwMessengerSaveEditedMessageBtnTxt: '',
                 mwMessengerLoadOldMessagesBtnTxt: '',
+                mwMessengerHistoryMessageBtnTxt: '',
                 mwMessengerLoadNewishMessagesBtnTxt: '',
                 myMessage: {
                     text: ''
@@ -74,6 +75,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
                     text: ''
                 },
                 isUserCanDeleteOtherUsersMessages: false,
+                isUserAllowedToViewMessagesHistory: false,
                 isChannelSet: false,
                 userId: 0,
                 userName: '',
@@ -104,6 +106,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             this.mwMessengerDeleteMessageBtnTxt = mw.msg('mw-messenger-delete-message-btn');
             this.mwMessengerLoadOldMessagesBtnTxt = mw.msg('mw-messenger-load-old-messages-btn');
             this.mwMessengerLoadNewishMessagesBtnTxt = mw.msg('mw-messenger-load-newish-messages-btn');
+            this.mwMessengerHistoryMessageBtnTxt = mw.msg('mw-messenger-history-message-btn')
 
             this.mwMessengerReactionsGroupSmileysAndEmotion = mw.msg('mw-messenger-reactions-group-smileys-and-emotion');
             this.mwMessengerReactionsGroupPeopleAndBody = mw.msg('mw-messenger-reactions-group-people-and-body');
@@ -115,6 +118,7 @@ mw.loader.using( [ 'vue', "mediawiki.api" ] ).then( function ( require ) {
             this.sitetitle = mw.msg('sitetitle');
 
             this.isUserCanDeleteOtherUsersMessages = mw.config.get('isUserCanDeleteOtherUsersMessages');
+            this.isUserAllowedToViewMessagesHistory = mw.config.get('isUserAllowedToViewMessagesHistory');
             this.wgChatSocialAvatars = mw.config.get('wgChatSocialAvatars');
             this.userId = mw.config.get('userId');
             this.userName = mw.config.get('userName');
